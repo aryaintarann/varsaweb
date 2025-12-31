@@ -1,13 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { submitContact } from "@/actions/contact";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Loader2, Mail, Phone, MapPin } from "lucide-react";
 import { toast } from "sonner";
 
 export function Contact() {
     const [loading, setLoading] = useState(false);
+    const sectionRef = useRef(null);
+
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "end start"],
+    });
+
+    const yInfo = useTransform(scrollYProgress, [0, 1], [40, -40]);
+    const yForm = useTransform(scrollYProgress, [0, 1], [60, -60]);
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -25,11 +34,11 @@ export function Contact() {
     }
 
     return (
-        <section id="contact" className="py-20 relative">
+        <section ref={sectionRef} id="contact" className="py-20 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid lg:grid-cols-2 gap-12">
                     {/* Contact Info */}
-                    <div>
+                    <motion.div style={{ y: yInfo }} className="will-change-transform">
                         <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm mb-2 block">
                             Hubungi Kami
                         </span>
@@ -70,15 +79,16 @@ export function Contact() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Contact Form */}
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false, margin: "-100px" }}
                         transition={{ duration: 0.5 }}
-                        className="glass-card p-8 rounded-3xl border border-white/10"
+                        style={{ y: yForm }}
+                        className="glass-card p-8 rounded-3xl border border-white/10 will-change-transform"
                     >
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid md:grid-cols-2 gap-6">

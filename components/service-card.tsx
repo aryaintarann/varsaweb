@@ -32,7 +32,7 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
         <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px" }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             className={`glass-card p-8 rounded-3xl hover:bg-white/5 transition-all duration-300 group h-full ${service.title.includes("E-Commerce") ? "border-indigo-500/30 relative" : ""}`}
         >

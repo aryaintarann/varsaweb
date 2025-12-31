@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const faqs = [
     {
@@ -24,18 +24,26 @@ const faqs = [
 ];
 
 export function Faq() {
+    const sectionRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "end start"],
+    });
+
+    const yHeader = useTransform(scrollYProgress, [0, 1], [40, -40]);
+
     return (
-        <section id="faq" className="py-20 bg-white/[0.02]">
+        <section ref={sectionRef} id="faq" className="py-20 bg-white/[0.02] overflow-hidden">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-12">
+                <motion.div style={{ y: yHeader }} className="text-center mb-12 will-change-transform">
                     <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm mb-2 block">FAQ</span>
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Pertanyaan Umum</h2>
                     <p className="text-slate-400">Hal-hal yang sering ditanyakan oleh klien kami.</p>
-                </div>
+                </motion.div>
 
                 <div className="space-y-4">
                     {faqs.map((faq, index) => (
-                        <FaqItem key={index} faq={faq} />
+                        <FaqItem key={index} faq={faq} index={index} />
                     ))}
                 </div>
             </div>
@@ -43,11 +51,17 @@ export function Faq() {
     );
 }
 
-function FaqItem({ faq }: { faq: { question: string; answer: string } }) {
+function FaqItem({ faq, index }: { faq: { question: string; answer: string }; index: number }) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className="glass-card rounded-2xl p-1">
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-50px" }}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
+            className="glass-card rounded-2xl p-1"
+        >
             <div
                 className="group"
                 onClick={() => setIsOpen(!isOpen)}
@@ -69,6 +83,6 @@ function FaqItem({ faq }: { faq: { question: string; answer: string } }) {
                     </div>
                 </motion.div>
             </div>
-        </div>
+        </motion.div>
     );
 }

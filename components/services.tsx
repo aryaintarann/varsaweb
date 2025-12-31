@@ -1,4 +1,6 @@
-import { prisma } from "@/lib/prisma";
+"use client";
+
+import { ParallaxSection } from "@/components/parallax-section";
 import { ServiceCard } from "@/components/service-card";
 
 // Fallback services matching HTML content
@@ -23,20 +25,11 @@ const staticServices = [
     }
 ];
 
-export async function Services() {
-    let services = [];
-    try {
-        services = await prisma.service.findMany();
-    } catch (e) {
-        // ignore
-    }
-
-    if (services.length === 0) {
-        services = staticServices;
-    }
+export function Services() {
+    const services = staticServices;
 
     return (
-        <section id="services" className="py-20 relative">
+        <ParallaxSection id="services" className="py-20 relative" speed={0.12}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
                     <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm mb-2 block">
@@ -58,6 +51,6 @@ export async function Services() {
                     })}
                 </div>
             </div>
-        </section>
+        </ParallaxSection>
     );
 }

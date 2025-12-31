@@ -1,20 +1,31 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Target, HeartHandshake } from "lucide-react";
 import Image from "next/image";
+import { useRef } from "react";
 
 export function About() {
+    const sectionRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "end start"],
+    });
+
+    const yImage = useTransform(scrollYProgress, [0, 1], [50, -50]);
+    const yContent = useTransform(scrollYProgress, [0, 1], [30, -30]);
+
     return (
-        <section id="about" className="py-20 bg-white/[0.02]">
+        <section ref={sectionRef} id="about" className="py-20 bg-white/[0.02] overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false, margin: "-100px" }}
                         transition={{ duration: 0.6 }}
-                        className="relative"
+                        style={{ y: yImage }}
+                        className="relative will-change-transform"
                     >
                         <div className="absolute -top-4 -left-4 w-24 h-24 bg-indigo-500/20 rounded-full blur-2xl"></div>
                         <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-pink-500/20 rounded-full blur-2xl"></div>
@@ -31,8 +42,10 @@ export function About() {
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false, margin: "-100px" }}
                         transition={{ duration: 0.6 }}
+                        style={{ y: yContent }}
+                        className="will-change-transform"
                     >
                         <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm mb-2 block">
                             Tentang Kami

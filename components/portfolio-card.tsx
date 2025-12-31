@@ -5,7 +5,13 @@ import Image from "next/image";
 
 export function PortfolioCard({ item, index }: { item: any; index: number }) {
     return (
-        <div className="group relative rounded-2xl overflow-hidden glass-card border-0">
+        <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-50px" }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="group relative rounded-2xl overflow-hidden glass-card border-0"
+        >
             <div className="aspect-video bg-slate-800 relative overflow-hidden">
                 <Image
                     src={item.imageUrl || ""}
@@ -24,6 +30,6 @@ export function PortfolioCard({ item, index }: { item: any; index: number }) {
                 </span>
                 <h3 className="text-xl font-bold text-white">{item.title}</h3>
             </div>
-        </div>
+        </motion.div>
     );
 }
