@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { PortfolioCard } from "./portfolio-card";
-// import { PortfolioItem } from "@prisma/client"; // Removed for build stability until client fixed
 
 export async function Portfolio() {
     let items: any[] = [];
@@ -9,36 +11,57 @@ export async function Portfolio() {
             orderBy: { createdAt: "desc" }
         });
     } catch (e) {
-        console.warn("DB offline");
+        // ignore
     }
 
-    // Fallback
+    // Use HTML fallback data
     if (items.length === 0) {
-        items = [1, 2, 3].map((i) => ({
-            id: i.toString(),
-            title: `Project Alpha ${i} `,
-            description: "A high-conversion e-commerce platform built with Next.js and Stripe.",
-            imageUrl: null, // Placeholder in card
-            link: "#",
-            createdAt: new Date(),
-            updatedAt: new Date()
-        }));
+        items = [
+            {
+                id: "1",
+                title: "PT. Maju Logistik",
+                category: "Company Profile",
+                imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
+                titleColorClass: "text-indigo-400"
+            },
+            {
+                id: "2",
+                title: "Sneaker Hype Store",
+                category: "E-Commerce",
+                imageUrl: "https://images.unsplash.com/photo-1523474253046-8cd2748b5fd2?auto=format&fit=crop&q=80&w=800",
+                titleColorClass: "text-pink-400"
+            },
+            {
+                id: "3",
+                title: "Webinar Keuangan",
+                category: "Landing Page",
+                imageUrl: "https://images.unsplash.com/photo-1555421689-491a97ff2040?auto=format&fit=crop&q=80&w=800",
+                titleColorClass: "text-blue-400"
+            }
+        ]
     }
 
     return (
-        <section id="portfolio" className="py-24 bg-muted/30">
-            <div className="container px-6 mx-auto">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+        <section id="portfolio" className="py-20 bg-black/20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
                     <div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Selected Work</h2>
-                        <p className="text-muted-foreground text-lg max-w-xl">
-                            Explore our latest projects where design meets functionality.
+                        <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm mb-2 block">
+                            Portfolio
+                        </span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                            Karya Terbaru
+                        </h2>
+                        <p className="text-slate-400">
+                            Beberapa project pilihan yang telah kami kerjakan.
                         </p>
                     </div>
-                    {/* Maybe filter buttons here later */}
+                    <Link href="#" className="text-indigo-400 font-medium hover:text-indigo-300 flex items-center gap-1 group">
+                        Lihat Semua <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {items.map((item, index) => (
                         <PortfolioCard key={item.id} item={item} index={index} />
                     ))}

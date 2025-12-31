@@ -1,20 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input"; // Need to create Input
-import { Textarea } from "./ui/textarea"; // Need to create Textarea
 import { submitContact } from "@/actions/contact";
 import { motion } from "framer-motion";
-import { Loader2, Send } from "lucide-react";
-import { toast } from "sonner"; // Assuming sonner or just native alert for now. Setup sonner later? No, alert for concise.
-
-// I will assume Input/Textarea exist or create them.
-// I'll use standard HTML inputs if components missing, but creating them next is better.
+import { Loader2, Mail, Phone, MapPin } from "lucide-react";
+import { toast } from "sonner";
 
 export function Contact() {
     const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState(false);
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -24,84 +17,124 @@ export function Contact() {
         setLoading(false);
 
         if (result.success) {
-            setSuccess(true);
-            // Reset form
+            toast.success("Message sent successfully!");
             (e.target as HTMLFormElement).reset();
         } else {
-            alert(result.error);
+            toast.error(result.error || "Something went wrong.");
         }
     }
 
     return (
-        <section id="contact" className="py-24 bg-background">
-            <div className="container px-6 mx-auto max-w-4xl">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="bg-secondary/30 p-8 md:p-12 rounded-2xl border border-border"
-                >
-                    <div className="text-center mb-10">
-                        <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-                            Get In Touch
+        <section id="contact" className="py-20 relative">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid lg:grid-cols-2 gap-12">
+                    {/* Contact Info */}
+                    <div>
+                        <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm mb-2 block">
+                            Hubungi Kami
+                        </span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                            Mari Diskusikan Ide Hebat Anda
                         </h2>
-                        <p className="text-muted-foreground">
-                            Ready to start your project? Send us a message and we'll get back to you within 24 hours.
+                        <p className="text-slate-400 mb-8 leading-relaxed">
+                            Punya pertanyaan atau siap memulai proyek? Isi formulir di samping atau hubungi kami melalui
+                            kontak langsung. Tim kami akan merespons dalam waktu kurang dari 24 jam.
                         </p>
+
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-4 group cursor-pointer p-4 rounded-xl hover:bg-white/5 transition-all">
+                                <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+                                    <Mail className="w-6 h-6" />
+                                </div>
+                                <div>
+                                    <h5 className="text-white font-bold">Email</h5>
+                                    <p className="text-slate-400">hello@varsaweb.com</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-4 group cursor-pointer p-4 rounded-xl hover:bg-white/5 transition-all">
+                                <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+                                    <Phone className="w-6 h-6" />
+                                </div>
+                                <div>
+                                    <h5 className="text-white font-bold">WhatsApp / Telepon</h5>
+                                    <p className="text-slate-400">+62 812 3456 7890</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-4 group cursor-pointer p-4 rounded-xl hover:bg-white/5 transition-all">
+                                <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+                                    <MapPin className="w-6 h-6" />
+                                </div>
+                                <div>
+                                    <h5 className="text-white font-bold">Lokasi Studio</h5>
+                                    <p className="text-slate-400">Jakarta Selatan, Indonesia</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    {success ? (
-                        <div className="text-center py-12">
-                            <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <Send className="w-8 h-8" />
-                            </div>
-                            <h3 className="text-2xl font-bold text-primary">Message Sent!</h3>
-                            <p className="text-muted-foreground mt-2">Thank you for reaching out.</p>
-                            <Button variant="outline" className="mt-6" onClick={() => setSuccess(false)}>Send Another</Button>
-                        </div>
-                    ) : (
+                    {/* Contact Form */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5 }}
+                        className="glass-card p-8 rounded-3xl border border-white/10"
+                    >
                         <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-2">
-                                    <label htmlFor="name" className="text-sm font-medium">Name</label>
+                            <div className="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-300 mb-2">Nama</label>
                                     <input
-                                        id="name"
+                                        type="text"
                                         name="name"
                                         required
-                                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                        placeholder="John Doe"
+                                        className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-slate-600"
+                                        placeholder="Nama Anda"
                                     />
                                 </div>
-                                <div className="space-y-2">
-                                    <label htmlFor="email" className="text-sm font-medium">Email</label>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-300 mb-2">Email</label>
                                     <input
-                                        id="email"
-                                        name="email"
                                         type="email"
+                                        name="email"
                                         required
-                                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                        className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-slate-600"
                                         placeholder="john@example.com"
                                     />
                                 </div>
                             </div>
-                            <div className="space-y-2">
-                                <label htmlFor="message" className="text-sm font-medium">Message</label>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-300 mb-2">Layanan yang Diminati</label>
+                                <select
+                                    name="service"
+                                    className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all bg-dark"
+                                >
+                                    <option className="bg-dark text-white">Company Profile</option>
+                                    <option className="bg-dark text-white">Toko Online</option>
+                                    <option className="bg-dark text-white">Landing Page</option>
+                                    <option className="bg-dark text-white">Lainnya</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-300 mb-2">Pesan</label>
                                 <textarea
-                                    id="message"
                                     name="message"
                                     required
-                                    rows={5}
-                                    className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                    placeholder="Tell us about your project..."
+                                    rows={4}
+                                    className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-slate-600"
+                                    placeholder="Ceritakan kebutuhan website Anda..."
                                 />
                             </div>
-                            <Button type="submit" size="lg" className="w-full" disabled={loading}>
-                                {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Send className="w-4 h-4 mr-2" />}
-                                Send Message
-                            </Button>
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-500/25 transition-all transform hover:-translate-y-1 flex justify-center items-center"
+                            >
+                                {loading ? <Loader2 className="animate-spin mr-2" /> : "Kirim Pesan"}
+                            </button>
                         </form>
-                    )}
-                </motion.div>
+                    </motion.div>
+                </div>
             </div>
         </section>
     );

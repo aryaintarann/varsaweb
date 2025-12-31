@@ -1,71 +1,61 @@
 import { prisma } from "@/lib/prisma";
-import { ServiceCard } from "@/components/service-card"; // Client component for animation
-// import { Service } from "@prisma/client";
+import { ServiceCard } from "@/components/service-card";
 
-// Server Component (can be async)
+// Fallback services matching HTML content
+const staticServices = [
+    {
+        id: "1",
+        title: "Website Profil & Branding",
+        description: "Ideal untuk Company Profile, Portfolio Pribadi, Blog, Landing Page, atau Website Organisasi/Komunitas.",
+        icon: "layout",
+    },
+    {
+        id: "2",
+        title: "E-Commerce & Bisnis",
+        description: "Solusi jualan online. Toko Online, Katalog Produk, Website Booking Hotel/Travel, hingga Marketplace.",
+        icon: "shopping-bag",
+    },
+    {
+        id: "3",
+        title: "Custom & Sistem Web",
+        description: "Mengerjakan jenis website apapun sesuai request. Portal Berita, Web Sekolah, Sistem Informasi, Forum, dll.",
+        icon: "code-2",
+    }
+];
+
 export async function Services() {
-    let services: any[] = [];
+    let services = [];
     try {
         services = await prisma.service.findMany();
     } catch (e) {
-        console.warn("Database not connected, using static services.");
+        // ignore
     }
 
-    // Fallback static data if DB is empty or fails
     if (services.length === 0) {
-        // We cast the fallback objects to match expected shape slightly, or strict typing
-        services = [
-            {
-                id: "1",
-                title: "Web Development",
-                description: "Custom Next.js applications tailored to your business needs with superior performance.",
-                icon: "monitor",
-                createdAt: new Date(),
-                updatedAt: new Date()
-            },
-            {
-                id: "2",
-                title: "SEO Optimization",
-                description: "Rank higher and reach more customers with our data-driven SEO strategies.",
-                icon: "search",
-                createdAt: new Date(),
-                updatedAt: new Date()
-            },
-            {
-                id: "3",
-                title: "UI/UX Design",
-                description: "Clean, modern interfaces that convert visitors into loyal customers.",
-                icon: "rocket",
-                createdAt: new Date(),
-                updatedAt: new Date()
-            },
-            {
-                id: "4",
-                title: "CMS Integration",
-                description: "Manage your content easily with our custom-built, secure admin panels.",
-                icon: "shield",
-                createdAt: new Date(),
-                updatedAt: new Date()
-            }
-        ];
+        services = staticServices;
     }
 
     return (
-        <section id="services" className="py-24 bg-background">
-            <div className="container px-6 mx-auto">
-                <div className="text-center max-w-2xl mx-auto mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-                        Our Services
+        <section id="services" className="py-20 relative">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-16">
+                    <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm mb-2 block">
+                        Layanan Kami
+                    </span>
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                        Pembuatan Segala Jenis Website
                     </h2>
-                    <p className="text-muted-foreground text-lg">
-                        We provide comprehensive digital solutions to help your business thrive in the modern web landscape.
+                    <p className="text-slate-400">
+                        Apapun kebutuhan website Anda, kami siap mewujudkannya dengan teknologi terbaru.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {services.map((service, index) => (
-                        <ServiceCard key={service.id} service={service} index={index} />
-                    ))}
+                <div className="grid md:grid-cols-3 gap-6">
+                    {services.map((service: any, index: number) => {
+                        return (
+                            <ServiceCard key={service.id} service={service} index={index} />
+                        );
+                    })}
                 </div>
             </div>
         </section>

@@ -1,69 +1,82 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import { Button } from "./ui/button";
-import Link from "next/link";
-import { CheckCircle2 } from "lucide-react";
+import { motion } from "framer-motion";
+import { Target, HeartHandshake } from "lucide-react";
+import Image from "next/image";
 
 export function About() {
-    const ref = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start end", "end start"],
-    });
-
-    const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-    const opacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
-
     return (
-        <section ref={ref} id="about" className="py-24 bg-muted/30 overflow-hidden">
-            <div className="container px-6 mx-auto">
-                <motion.div
-                    style={{ opacity, y }}
-                    className="flex flex-col md:flex-row items-center gap-12"
-                >
-                    {/* Text Content */}
-                    <div className="flex-1 space-y-6">
-                        <h2 className="text-3xl md:text-4xl font-bold text-primary">
-                            Who We Are
-                        </h2>
-                        <p className="text-lg text-muted-foreground leading-relaxed">
-                            VarsaWeb is a forward-thinking digital agency dedicated to crafting superior web experiences. We believe in the power of clean design and robust engineering to elevate brands.
-                        </p>
-                        <ul className="space-y-4 mt-6">
-                            {[
-                                "Custom High-Performance Websites",
-                                "Scalable CMS Solutions",
-                                "SEO-Optimized Architecture",
-                                "Modern, Clean Aesthetics"
-                            ].map((item, i) => (
-                                <li key={i} className="flex items-center gap-3">
-                                    <CheckCircle2 className="text-accent h-5 w-5" />
-                                    <span className="text-foreground font-medium">{item}</span>
-                                </li>
-                            ))}
-                        </ul>
-                        <div className="pt-4">
-                            <Button variant="secondary" asChild>
-                                <Link href="#portfolio">See Our Work</Link>
-                            </Button>
+        <section id="about" className="py-20 bg-white/[0.02]">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="relative"
+                    >
+                        <div className="absolute -top-4 -left-4 w-24 h-24 bg-indigo-500/20 rounded-full blur-2xl"></div>
+                        <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-pink-500/20 rounded-full blur-2xl"></div>
+                        <div className="relative aspect-video md:aspect-square overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
+                            <Image
+                                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
+                                alt="Tim VarsaWeb"
+                                fill
+                                className="object-cover"
+                            />
                         </div>
-                    </div>
+                    </motion.div>
 
-                    {/* Visual/Image Placeholder */}
-                    <div className="flex-1 relative">
-                        <div className="relative z-10 bg-primary p-8 rounded-2xl shadow-2xl text-primary-foreground">
-                            <div className="text-8xl font-bold opacity-10 absolute top-4 right-4">01</div>
-                            <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
-                            <p className="text-primary-foreground/80">
-                                To empower businesses with digital tools that are not just functional, but exceptional. We strip away the clutter to focus on what matters: your success.
-                            </p>
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm mb-2 block">
+                            Tentang Kami
+                        </span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                            Lebih Dari Sekadar Jasa Pembuatan Website
+                        </h2>
+                        <p className="text-slate-400 mb-6 leading-relaxed">
+                            VarsaWeb lahir dari semangat untuk membantu UMKM dan perusahaan
+                            Indonesia bersaing di era digital. Kami bukan hanya menulis kode,
+                            kami merancang solusi bisnis.
+                        </p>
+                        <p className="text-slate-400 mb-8 leading-relaxed">
+                            Tim kami terdiri dari desainer UI/UX yang kreatif, developer yang
+                            handal, dan ahli strategi digital yang siap memastikan website Anda
+                            tidak hanya bagus dilihat, tapi juga menghasilkan profit.
+                        </p>
+
+                        <div className="space-y-4">
+                            <div className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors">
+                                <div className="bg-indigo-500/10 p-3 rounded-lg text-indigo-400 shrink-0">
+                                    <Target className="w-5 h-5" />
+                                </div>
+                                <div>
+                                    <h4 className="text-white font-bold">Fokus Hasil</h4>
+                                    <p className="text-sm text-slate-500">
+                                        Desain yang mengutamakan user experience dan konversi.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors">
+                                <div className="bg-pink-500/10 p-3 rounded-lg text-pink-400 shrink-0">
+                                    <HeartHandshake className="w-5 h-5" />
+                                </div>
+                                <div>
+                                    <h4 className="text-white font-bold">Partner Jangka Panjang</h4>
+                                    <p className="text-sm text-slate-500">
+                                        Kami menemani Anda dari awal pembuatan hingga maintenance.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        {/* Decorative element */}
-                        <div className="absolute top-10 -right-10 w-full h-full border-2 border-accent/20 rounded-2xl -z-10 transform rotate-3" />
-                    </div>
-                </motion.div>
+                    </motion.div>
+                </div>
             </div>
         </section>
     );
