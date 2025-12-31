@@ -1,10 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Zap, Menu, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function Navbar() {
@@ -13,7 +12,7 @@ export function Navbar() {
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
+            setIsScrolled(window.scrollY > 10);
         };
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
@@ -23,80 +22,85 @@ export function Navbar() {
         { name: "About", href: "#about" },
         { name: "Services", href: "#services" },
         { name: "Portfolio", href: "#portfolio" },
+        { name: "FAQ", href: "#faq" },
         { name: "Contact", href: "#contact" },
     ];
 
     return (
-        <motion.header
+        <nav
             className={cn(
-                "fixed top-0 z-50 w-full transition-all duration-300",
-                isScrolled
-                    ? "bg-background/95 backdrop-blur-md shadow-sm py-4"
-                    : "bg-transparent py-6"
+                "fixed w-full z-50 transition-all duration-300",
+                isScrolled ? "glass-nav" : "bg-transparent py-4"
             )}
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.5 }}
         >
-            <div className="container mx-auto px-6 flex items-center justify-between">
-                <Link href="/" className="text-2xl font-bold tracking-tight text-primary">
-                    Varsa<span className="text-accent">Web</span>
-                </Link>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex justify-between items-center h-20">
+                    {/* Logo */}
+                    <Link href="/" className="flex items-center gap-2 cursor-pointer group">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+                            <Zap className="w-6 h-6 fill-current" />
+                        </div>
+                        <span className="font-bold text-xl tracking-tight text-white">
+                            Varsa<span className="text-indigo-400">Web</span>
+                        </span>
+                    </Link>
 
-                {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center gap-8">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
-                    <Button variant="default" size="sm" asChild>
-                        <Link href="#contact">Get Started</Link>
-                    </Button>
-                </nav>
+                    {/* Desktop Links */}
+                    <div className="hidden md:flex items-center space-x-6">
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.name}
+                                href={link.href}
+                                className="text-sm font-medium text-slate-300 hover:text-white transition-colors"
+                            >
+                                {link.name}
+                            </Link>
+                        ))}
+                    </div>
 
-                {/* Mobile Toggle */}
-                <button
-                    className="md:hidden text-primary"
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                >
-                    {mobileMenuOpen ? <X /> : <Menu />}
-                </button>
+                    {/* CTA Button */}
+                    <Link
+                        href="#contact"
+                        className="hidden md:flex px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white text-sm font-medium transition-all items-center gap-2 group"
+                    >
+                        Mulai Project
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+
+                    {/* Mobile Menu Button */}
+                    <button
+                        className="md:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    >
+                        {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                    </button>
+                </div>
             </div>
 
-            {/* Mobile Nav */}
+            {/* Mobile Menu */}
             <AnimatePresence>
                 {mobileMenuOpen && (
                     <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-background border-b"
+                        className="md:hidden bg-dark/95 backdrop-blur-xl border-b border-white/5 overflow-hidden"
                     >
-                        <div className="px-6 py-4 flex flex-col gap-4">
+                        <div className="px-4 pt-2 pb-6 space-y-1">
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className="text-base font-medium text-foreground hover:text-accent"
+                                    className="block px-3 py-3 text-base font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-md"
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
                                     {link.name}
                                 </Link>
                             ))}
-                            <Button className="w-full" asChild>
-                                <Link href="#contact" onClick={() => setMobileMenuOpen(false)}>
-                                    Get Started
-                                </Link>
-                            </Button>
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
-        </motion.header>
+        </nav>
     );
 }
