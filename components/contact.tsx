@@ -138,7 +138,7 @@ export function Contact() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-500/25 transition-all transform hover:-translate-y-1 flex justify-center items-center"
+                                className="w-full bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-500/25 transition-all transform hover:-translate-y-1 flex justify-center items-center"
                             >
                                 {loading ? <Loader2 className="animate-spin mr-2" /> : "Kirim Pesan"}
                             </button>

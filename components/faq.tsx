@@ -33,7 +33,7 @@ export function Faq() {
     const yHeader = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
     return (
-        <section ref={sectionRef} id="faq" className="py-20 bg-white/[0.02] overflow-hidden">
+        <section ref={sectionRef} id="faq" className="py-20 bg-white/2 overflow-hidden">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div style={{ y: yHeader }} className="text-center mb-12 will-change-transform">
                     <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm mb-2 block">FAQ</span>

@@ -19,7 +19,7 @@ export function PortfolioCard({ item, index }: { item: any; index: number }) {
                     fill
                     className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-80"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-dark to-transparent opacity-80"></div>
             </div>
             <div className="absolute bottom-0 left-0 p-6 w-full translate-y-2 group-hover:translate-y-0 transition-transform">
                 <span
