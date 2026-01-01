@@ -2,6 +2,9 @@
 
 import { ParallaxSection } from "./parallax-section";
 import { PortfolioCard } from "./portfolio-card";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 interface PortfolioItem {
     id: string;
@@ -41,34 +44,12 @@ const staticItems = [
         imageUrl: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800",
         link: null,
     },
-    {
-        id: "4",
-        title: "Artisan Bakery",
-        description: "Website toko roti premium dengan sistem pemesanan online",
-        category: "E-Commerce",
-        imageUrl: "https://images.unsplash.com/photo-1517433367941-f210f9c2de70?auto=format&fit=crop&q=80&w=800",
-        link: null,
-    },
-    {
-        id: "5",
-        title: "Property Pro",
-        description: "Portal listing properti dengan virtual tour 360°",
-        category: "Web App",
-        imageUrl: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800",
-        link: null,
-    },
-    {
-        id: "6",
-        title: "Edu Course",
-        description: "Platform kursus online dengan fitur sertifikasi",
-        category: "Web App",
-        imageUrl: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=800",
-        link: null,
-    },
 ];
 
 export function Portfolio({ items }: PortfolioProps) {
     const data = items.length > 0 ? items : staticItems;
+    const displayItems = data.slice(0, 3);
+    const hasMore = data.length > 3;
 
     return (
         <ParallaxSection id="portfolio" className="py-20 bg-black/20" speed={0.1}>
@@ -85,10 +66,27 @@ export function Portfolio({ items }: PortfolioProps) {
                     </p>
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {data.map((item, index) => (
+                    {displayItems.map((item, index) => (
                         <PortfolioCard key={item.id} item={item} index={index} />
                     ))}
                 </div>
+
+                {hasMore && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: false }}
+                        className="text-center mt-12"
+                    >
+                        <Link
+                            href="/portfolio"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 rounded-xl text-white hover:bg-indigo-500 transition-all group"
+                        >
+                            Lihat Portfolio Lainnya
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                    </motion.div>
+                )}
             </div>
         </ParallaxSection>
     );

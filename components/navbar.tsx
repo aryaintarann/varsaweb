@@ -19,12 +19,12 @@ export function Navbar() {
     }, []);
 
     const navLinks = [
-        { name: "About", href: "#about" },
-        { name: "Services", href: "#services" },
-        { name: "Portfolio", href: "#portfolio" },
-        { name: "Testimoni", href: "#testimonials" },
-        { name: "FAQ", href: "#faq" },
-        { name: "Contact", href: "#contact" },
+        { name: "About", href: "/#about" },
+        { name: "Services", href: "/#services" },
+        { name: "Portfolio", href: "/#portfolio" },
+        { name: "Testimoni", href: "/#testimonials" },
+        { name: "FAQ", href: "/#faq" },
+        { name: "Contact", href: "/#contact" },
     ];
 
     return (
@@ -61,7 +61,7 @@ export function Navbar() {
 
                     {/* CTA Button */}
                     <Link
-                        href="#contact"
+                        href="/#contact"
                         className="hidden md:flex px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white text-sm font-medium transition-all items-center gap-2 group"
                     >
                         Mulai Project

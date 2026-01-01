@@ -55,13 +55,11 @@ export default async function PortfolioPage() {
                                             <Pencil className="w-4 h-4 mr-1" /> Edit
                                         </Link>
                                     </Button>
-                                    {item.link && (
-                                        <Button variant="outline" size="sm" asChild>
-                                            <a href={item.link} target="_blank" rel="noopener noreferrer">
-                                                <ExternalLink className="w-4 h-4" />
-                                            </a>
-                                        </Button>
-                                    )}
+                                    <Button variant="outline" size="sm" asChild>
+                                        <Link href={`/portfolio/${item.id}`} target="_blank">
+                                            <ExternalLink className="w-4 h-4" />
+                                        </Link>
+                                    </Button>
                                     <DeleteButton id={item.id} onDelete={deletePortfolioItem} />
                                 </div>
                             </div>
