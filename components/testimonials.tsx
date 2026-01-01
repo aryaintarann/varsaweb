@@ -41,17 +41,17 @@ export function Testimonials({ reviews }: TestimonialsProps) {
     }, [autoPlay, reviews.length, currentIndex]);
 
     return (
-        <section id="testimonials" className="py-20 bg-white/2 overflow-hidden">
+        <section id="testimonials" className="py-20 bg-[#F0FAFA] overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
-                    <span className="text-pink-400 font-bold tracking-wider uppercase text-sm mb-2 block">
-                        Testimoni
+                    <span className="text-[#006666] font-bold tracking-wider uppercase text-sm mb-2 block">
+                        Testimonials
                     </span>
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                        Apa Kata Klien Kami
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#006666] mb-4">
+                        What Our Clients Say
                     </h2>
-                    <p className="text-slate-400 max-w-xl mx-auto">
-                        Dengarkan pengalaman langsung dari klien yang telah bekerja sama dengan VarsaWeb.
+                    <p className="text-[#334155] max-w-xl mx-auto">
+                        Hear directly from clients who have worked with VarsaWeb.
                     </p>
                 </div>
 
@@ -61,14 +61,14 @@ export function Testimonials({ reviews }: TestimonialsProps) {
                         whileInView={{ opacity: 1, y: 0 }}
                         className="text-center py-16"
                     >
-                        <Star className="w-16 h-16 text-slate-700 mx-auto mb-6" />
-                        <p className="text-slate-500 text-lg mb-10">Belum ada Testimoni</p>
+                        <Star className="w-16 h-16 text-foreground/30 mx-auto mb-6" />
+                        <p className="text-foreground/60 text-lg mb-10">No Testimonials Yet</p>
                         <Link
                             href="/review"
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 rounded-xl text-white hover:bg-indigo-500 transition-colors"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-teal rounded-xl text-navy font-semibold hover:bg-teal/90 transition-colors"
                         >
                             <Star className="w-4 h-4" />
-                            Jadilah yang Pertama Memberi Review
+                            Be the First to Review
                         </Link>
                     </motion.div>
                 ) : (
@@ -88,12 +88,12 @@ export function Testimonials({ reviews }: TestimonialsProps) {
                                         animate={{ opacity: 1, x: 0 }}
                                         exit={{ opacity: 0, x: -100 }}
                                         transition={{ duration: 0.3 }}
-                                        className="glass-card p-8 md:p-12 border border-white/10 text-center"
+                                        className="bg-[#4DD0C7]/20 p-8 md:p-12 border-2 border-[#4DD0C7]/40 text-center rounded-3xl"
                                     >
-                                        <Quote className="w-12 h-12 text-indigo-500/30 mx-auto mb-6" />
+                                        <Quote className="w-12 h-12 text-[#006666]/30 mx-auto mb-6" />
 
                                         {/* Message */}
-                                        <p className="text-slate-300 text-lg md:text-xl leading-relaxed mb-8">
+                                        <p className="text-[#334155] text-lg md:text-xl leading-relaxed mb-8">
                                             "{reviews[currentIndex].message}"
                                         </p>
 
@@ -103,8 +103,8 @@ export function Testimonials({ reviews }: TestimonialsProps) {
                                                 <Star
                                                     key={star}
                                                     className={`w-5 h-5 ${star <= reviews[currentIndex].rating
-                                                            ? "text-amber-400 fill-amber-400"
-                                                            : "text-slate-600"
+                                                        ? "text-amber-400 fill-amber-400"
+                                                        : "text-[#334155]/20"
                                                         }`}
                                                 />
                                             ))}
@@ -112,13 +112,13 @@ export function Testimonials({ reviews }: TestimonialsProps) {
 
                                         {/* Author */}
                                         <div className="flex items-center justify-center gap-3">
-                                            <div className="w-12 h-12 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold text-lg">
+                                            <div className="w-12 h-12 rounded-full bg-[#006666]/10 flex items-center justify-center text-[#006666] font-bold text-lg">
                                                 {reviews[currentIndex].name.charAt(0).toUpperCase()}
                                             </div>
                                             <div className="text-left">
-                                                <h4 className="text-white font-semibold">{reviews[currentIndex].name}</h4>
+                                                <h4 className="text-[#006666] font-semibold">{reviews[currentIndex].name}</h4>
                                                 {reviews[currentIndex].company && (
-                                                    <p className="text-slate-500 text-sm">{reviews[currentIndex].company}</p>
+                                                    <p className="text-[#334155] text-sm">{reviews[currentIndex].company}</p>
                                                 )}
                                             </div>
                                         </div>
@@ -131,13 +131,13 @@ export function Testimonials({ reviews }: TestimonialsProps) {
                                 <>
                                     <button
                                         onClick={prevSlide}
-                                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-14 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white transition-colors"
+                                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-14 w-10 h-10 rounded-full bg-white hover:bg-[#006666]/10 border border-[#006666]/20 flex items-center justify-center text-[#006666] transition-colors shadow-md"
                                     >
                                         <ChevronLeft className="w-5 h-5" />
                                     </button>
                                     <button
                                         onClick={nextSlide}
-                                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-14 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white transition-colors"
+                                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-14 w-10 h-10 rounded-full bg-white hover:bg-[#006666]/10 border border-[#006666]/20 flex items-center justify-center text-[#006666] transition-colors shadow-md"
                                     >
                                         <ChevronRight className="w-5 h-5" />
                                     </button>
@@ -153,8 +153,8 @@ export function Testimonials({ reviews }: TestimonialsProps) {
                                         key={index}
                                         onClick={() => setCurrentIndex(index)}
                                         className={`w-2 h-2 rounded-full transition-all ${index === currentIndex
-                                                ? "bg-indigo-500 w-8"
-                                                : "bg-white/20 hover:bg-white/40"
+                                            ? "bg-[#006666] w-8"
+                                            : "bg-[#006666]/20 hover:bg-[#006666]/40"
                                             }`}
                                     />
                                 ))}
@@ -170,10 +170,10 @@ export function Testimonials({ reviews }: TestimonialsProps) {
                         >
                             <Link
                                 href="/review"
-                                className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 rounded-xl text-white hover:bg-white/10 transition-colors"
+                                className="inline-flex items-center gap-2 px-6 py-3 bg-[#006666]/10 border border-[#006666]/20 rounded-xl text-[#006666] hover:bg-[#006666]/20 transition-colors"
                             >
                                 <Star className="w-4 h-4" />
-                                Berikan Review Anda
+                                Leave a Review
                             </Link>
                         </motion.div>
                     </div>

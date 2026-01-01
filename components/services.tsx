@@ -18,29 +18,29 @@ interface ServicesProps {
 const staticServices = [
     {
         id: "1",
-        title: "Website Company Profile",
-        description: "Tingkatkan kredibilitas bisnis Anda dengan website elegan yang mencerminkan profesionalisme dan nilai perusahaan. Dilengkapi fitur SEO-friendly.",
+        title: "Company Profile Website",
+        description: "Boost your business credibility with an elegant website illustrating professionalism and corporate values. SEO-friendly features included.",
         icon: "layout",
         order: 0,
     },
     {
         id: "2",
-        title: "Toko Online / E-Commerce",
-        description: "Solusi lengkap untuk berjualan online dengan sistem keranjang belanja, pembayaran terintegrasi (Midtrans, dll), dan manajemen produk yang mudah.",
+        title: "E-Commerce / Online Store",
+        description: "Complete solution for online selling with shopping cart systems, integrated payments (Midtrans, etc.), and easy product management.",
         icon: "shopping-bag",
         order: 1,
     },
     {
         id: "3",
-        title: "Landing Page Konversi Tinggi",
-        description: "Halaman khusus yang dirancang untuk mengubah pengunjung menjadi pelanggan dengan copywriting strategis dan desain yang persuasif.",
+        title: "High Conversion Landing Page",
+        description: "Specialized pages designed to convert visitors into customers with strategic copywriting and persuasive design.",
         icon: "target",
         order: 2,
     },
     {
         id: "4",
         title: "Custom Web Application",
-        description: "Butuh fitur yang unik? Kami membangun aplikasi web sesuai kebutuhan spesifik bisnis Anda, dari sistem reservasi hingga dashboard analitik.",
+        description: "Need unique features? We build web apps tailored to your specific business needs, from reservation systems to analytics dashboards.",
         icon: "code-2",
         order: 3,
     },
@@ -50,17 +50,17 @@ export function Services({ services }: ServicesProps) {
     const data = services.length > 0 ? services : staticServices;
 
     return (
-        <ParallaxSection id="services" className="py-20 relative" speed={0.12}>
+        <ParallaxSection id="services" className="py-20 relative bg-[#F0FAFA]" speed={0.12}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
-                    <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm mb-2 block">
-                        Layanan Kami
+                    <span className="text-[#006666] font-bold tracking-wider uppercase text-sm mb-2 block">
+                        Our Services
                     </span>
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                        Solusi Digital untuk Setiap Kebutuhan
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#006666] mb-4">
+                        Digital Solutions for Every Need
                     </h2>
-                    <p className="text-slate-400 max-w-xl mx-auto">
-                        Dari website sederhana hingga aplikasi web kompleks, kami siap mewujudkan visi digital Anda.
+                    <p className="text-[#334155] max-w-xl mx-auto">
+                        From simple websites to complex web apps, we are ready to realize your digital vision.
                     </p>
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">

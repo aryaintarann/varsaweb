@@ -12,35 +12,40 @@ const config: Config = {
                 sans: ['var(--font-jakarta)', 'sans-serif'],
             },
             colors: {
-                background: "#0B0F19", // Deep dark blue/black
-                foreground: "#e2e8f0",
+                background: "#FFFFFF",
+                foreground: "#334155",
                 primary: {
-                    DEFAULT: "#6366f1", // Indigo
+                    DEFAULT: "#0D1F38", // Navy
                     foreground: "#ffffff",
                 },
                 secondary: {
-                    DEFAULT: "#ec4899", // Pink
-                    foreground: "#ffffff",
+                    DEFAULT: "#4DD0C7", // Teal
+                    foreground: "#0D1F38",
                 },
                 accent: {
-                    DEFAULT: "#8b5cf6", // Violet
-                    foreground: "#ffffff",
+                    DEFAULT: "#4DD0C7", // Teal
+                    foreground: "#0D1F38",
                 },
-                dark: "#0B0F19",
-                glass: "rgba(255, 255, 255, 0.05)",
-                glassHover: "rgba(255, 255, 255, 0.1)",
+                dark: "#0D1F38",
+                surface: "#F4F7FA",
                 muted: {
-                    DEFAULT: "#1e293b",
-                    foreground: "#94a3b8",
+                    DEFAULT: "#F4F7FA",
+                    foreground: "#64748b",
                 },
                 card: {
-                    DEFAULT: "rgba(255, 255, 255, 0.03)",
-                    foreground: "#e2e8f0",
-                }
+                    DEFAULT: "#F4F7FA",
+                    foreground: "#334155",
+                },
+                navy: "#0D1F38",
+                teal: "#4DD0C7",
             },
             animation: {
                 blob: "blob 7s infinite",
                 "fade-in-up": "fadeInUp 0.5s ease-out forwards",
+                "pulse-glow": "pulseGlow 4s ease-in-out infinite",
+                "float": "float 6s ease-in-out infinite",
+                "float-slow": "float 8s ease-in-out infinite",
+                "circuit-flow": "circuitFlow 3s linear infinite",
             },
             keyframes: {
                 blob: {
@@ -52,7 +57,19 @@ const config: Config = {
                 fadeInUp: {
                     "0%": { opacity: "0", transform: "translateY(10px)" },
                     "100%": { opacity: "1", transform: "translateY(0)" },
-                }
+                },
+                pulseGlow: {
+                    "0%, 100%": { opacity: "0.1", transform: "scale(1)" },
+                    "50%": { opacity: "0.2", transform: "scale(1.05)" },
+                },
+                float: {
+                    "0%, 100%": { transform: "translateY(0px)" },
+                    "50%": { transform: "translateY(-20px)" },
+                },
+                circuitFlow: {
+                    "0%": { strokeDashoffset: "100" },
+                    "100%": { strokeDashoffset: "0" },
+                },
             },
         },
     },

@@ -40,7 +40,7 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
                         className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-8"
                     >
                         <ArrowLeft className="w-4 h-4" />
-                        Kembali ke Portfolio
+                        Back to Portfolio
                     </Link>
 
                     {/* Image */}
@@ -78,7 +78,7 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 rounded-xl text-white hover:bg-indigo-500 transition-colors"
                             >
-                                Lihat Project
+                                View Project
                                 <ExternalLink className="w-4 h-4" />
                             </a>
                         )}

@@ -18,26 +18,26 @@ interface FaqProps {
 const defaultFaqs = [
     {
         id: "1",
-        question: "Berapa lama proses pembuatan website?",
-        answer: "Waktu pengerjaan bervariasi tergantung kompleksitas proyek. Untuk website standar, biasanya membutuhkan waktu 1-2 minggu. Website dengan fitur kustom seperti e-commerce atau sistem booking bisa memakan waktu 3-4 minggu.",
+        question: "How long does it take to create a website?",
+        answer: "Development time varies depending on project complexity. For a standard website, it usually takes 1-2 weeks. websites with custom features like e-commerce or booking systems can take 3-4 weeks.",
         order: 0,
     },
     {
         id: "2",
-        question: "Apakah harga sudah termasuk domain dan hosting?",
-        answer: "Harga paket kami belum termasuk domain dan hosting untuk memberikan Anda fleksibilitas dalam memilih provider. Namun, kami dengan senang hati akan membantu Anda dalam proses setup domain dan hosting pilihan Anda.",
+        question: "Does the price include domain and hosting?",
+        answer: "Our package prices do not include domain and hosting to give you flexibility in choosing a provider. However, we are happy to assist you in the setup process with your chosen domain and hosting.",
         order: 1,
     },
     {
         id: "3",
-        question: "Apa saja yang termasuk dalam layanan maintenance?",
-        answer: "Layanan maintenance kami mencakup backup rutin, update keamanan, monitoring uptime, perbaikan bug minor, dan support teknis melalui WhatsApp atau email selama jam kerja.",
+        question: "What is included in the maintenance service?",
+        answer: "Our maintenance service includes routine backups, security updates, uptime monitoring, minor bug fixes, and technical support via WhatsApp or email during business hours.",
         order: 2,
     },
     {
         id: "4",
-        question: "Bisakah saya request revisi desain?",
-        answer: "Tentu! Kami menyediakan revisi desain sesuai paket yang dipilih. Setiap milestone akan melalui proses approval dari Anda sebelum kami melanjutkan ke tahap berikutnya.",
+        question: "Can I request design revisions?",
+        answer: "Absolutely! We provide design revisions according to the selected package. Each milestone will go through an approval process from you before we proceed to the next stage.",
         order: 3,
     },
 ];
@@ -51,15 +51,15 @@ function FaqItemComponent({ faq, index }: { faq: FaqItem; index: number }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, margin: "-50px" }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
-            className="glass-card rounded-2xl p-1"
+            className="bg-[#4DD0C7]/20 border-2 border-[#4DD0C7]/40 rounded-2xl p-1 shadow-sm hover:bg-[#4DD0C7]/30 transition-colors"
         >
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center justify-between w-full p-5 text-left"
             >
-                <span className="font-semibold text-white">{faq.question}</span>
+                <span className="font-semibold text-[#006666]">{faq.question}</span>
                 <ChevronDown
-                    className={`w-5 h-5 text-slate-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                    className={`w-5 h-5 text-[#006666] transition-transform ${isOpen ? "rotate-180" : ""}`}
                 />
             </button>
             <AnimatePresence initial={false}>
@@ -71,7 +71,7 @@ function FaqItemComponent({ faq, index }: { faq: FaqItem; index: number }) {
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                     >
-                        <p className="px-5 pb-5 text-slate-400 leading-relaxed">{faq.answer}</p>
+                        <p className="px-5 pb-5 text-[#334155] leading-relaxed">{faq.answer}</p>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -91,15 +91,15 @@ export function Faq({ faqs }: FaqProps) {
     const data = faqs.length > 0 ? faqs : defaultFaqs;
 
     return (
-        <section ref={sectionRef} id="faq" className="py-20 bg-white/2 overflow-hidden">
+        <section ref={sectionRef} id="faq" className="py-20 bg-[#F0FAFA] overflow-hidden">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div style={{ y: yHeader }} className="text-center mb-12 will-change-transform">
-                    <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm mb-2 block">FAQ</span>
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                        Pertanyaan yang Sering Diajukan
+                    <span className="text-[#006666] font-bold tracking-wider uppercase text-sm mb-2 block">FAQ</span>
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#006666] mb-4">
+                        Frequently Asked Questions
                     </h2>
-                    <p className="text-slate-400 max-w-xl mx-auto">
-                        Beberapa pertanyaan yang sering ditanyakan klien kami.
+                    <p className="text-[#334155] max-w-xl mx-auto">
+                        Some common questions asked by our clients.
                     </p>
                 </motion.div>
 

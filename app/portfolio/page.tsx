@@ -16,7 +16,7 @@ const staticItems: PortfolioItem[] = [
     {
         id: "1",
         title: "Kopi Nusantara",
-        description: "E-commerce untuk kopi spesialti dengan fitur langganan bulanan",
+        description: "Specialty coffee e-commerce with monthly subscription features",
         category: "E-Commerce",
         imageUrl: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=800",
         link: null,
@@ -24,7 +24,7 @@ const staticItems: PortfolioItem[] = [
     {
         id: "2",
         title: "TechStart ID",
-        description: "Platform listing startup Indonesia dengan fitur investor matching",
+        description: "Indonesian startup listing platform with investor matching features",
         category: "Web App",
         imageUrl: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800",
         link: null,
@@ -32,7 +32,7 @@ const staticItems: PortfolioItem[] = [
     {
         id: "3",
         title: "Healthy Living",
-        description: "Landing page untuk program kesehatan dengan konversi tinggi",
+        description: "High-conversion landing page for health programs",
         category: "Landing Page",
         imageUrl: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800",
         link: null,
@@ -62,11 +62,11 @@ export default async function PortfolioPage() {
                             Portfolio
                         </span>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                            Karya Terbaik Kami
+                            Our Best Works
                         </h1>
                         <p className="text-slate-400 max-w-2xl mx-auto">
-                            Lihat koleksi lengkap proyek-proyek yang telah kami kerjakan.
-                            Setiap karya mencerminkan dedikasi kami dalam menciptakan solusi digital yang berkualitas.
+                            Explore our complete collection of projects.
+                            Each work reflects our dedication to creating quality digital solutions.
                         </p>
                     </div>
 
@@ -79,7 +79,7 @@ export default async function PortfolioPage() {
 
                     {data.length === 0 && (
                         <div className="text-center py-20">
-                            <p className="text-slate-500 text-lg">Belum ada portfolio</p>
+                            <p className="text-slate-500 text-lg">No portfolio items yet</p>
                         </div>
                     )}
                 </div>

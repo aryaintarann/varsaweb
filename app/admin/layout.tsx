@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, FileText, Briefcase, Mail, LogOut, Settings, HelpCircle, Star } from "lucide-react";
 
@@ -20,7 +21,15 @@ export default async function AdminLayout({
             {/* Sidebar */}
             <aside className="w-64 bg-background border-r hidden md:flex flex-col">
                 <div className="h-16 flex items-center px-6 border-b">
-                    <Link href="/" className="font-bold text-lg tracking-tight">
+                    <Link href="/" className="flex items-center gap-2 font-bold text-lg tracking-tight">
+                        <div className="relative w-8 h-8">
+                            <Image
+                                src="/logo-brand.png"
+                                alt="VarsaWeb Logo"
+                                fill
+                                className="object-contain"
+                            />
+                        </div>
                         Varsa<span className="text-primary">Admin</span>
                     </Link>
                 </div>
