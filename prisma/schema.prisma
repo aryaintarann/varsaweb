@@ -85,6 +85,8 @@ model ContactSubmission {
   name      String
   email     String
   phone     String?
+  service   String?
+  preferredContact String?
   message   String
   read      Boolean  @default(false)
   createdAt DateTime @default(now())

@@ -51,7 +51,7 @@ export function Footer() {
                 </div>
 
                 <div className="border-t border-white/5 pt-8 text-center text-sm text-slate-600">
-                    &copy; 2024 VarsaWeb Creative Agency. All rights reserved.
+                    &copy; 2026 VarsaWeb. All rights reserved.
                 </div>
             </div>
         </footer>

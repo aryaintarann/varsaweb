@@ -144,9 +144,35 @@ export function Contact({ settings }: ContactProps) {
                                     name="phone"
                                     required
                                     className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-slate-600"
-                                    placeholder="0812 3456 7890"
+                                    placeholder="+62 812 3456 7890"
                                 />
                             </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-slate-300 mb-3">Metode Komunikasi Pilihan</label>
+                                <div className="flex gap-6">
+                                    <label className="flex items-center gap-2 cursor-pointer group">
+                                        <input
+                                            type="radio"
+                                            name="preferredContact"
+                                            value="Email"
+                                            defaultChecked
+                                            className="w-4 h-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 bg-black/20 accent-indigo-500"
+                                        />
+                                        <span className="text-slate-300 group-hover:text-white transition-colors">Email</span>
+                                    </label>
+                                    <label className="flex items-center gap-2 cursor-pointer group">
+                                        <input
+                                            type="radio"
+                                            name="preferredContact"
+                                            value="WhatsApp"
+                                            className="w-4 h-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 bg-black/20 accent-indigo-500"
+                                        />
+                                        <span className="text-slate-300 group-hover:text-white transition-colors">WhatsApp</span>
+                                    </label>
+                                </div>
+                            </div>
+
                             <div>
                                 <label className="block text-sm font-medium text-slate-300 mb-2">Layanan yang Diminati</label>
                                 <select

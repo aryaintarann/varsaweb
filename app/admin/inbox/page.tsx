@@ -8,6 +8,8 @@ interface ContactSubmission {
     name: string;
     email: string;
     phone: string | null;
+    service: string | null;
+    preferredContact: string | null;
     message: string;
     read: boolean;
     createdAt: Date;
@@ -55,7 +57,14 @@ export default async function InboxPage() {
                                                 </span>
                                             )}
                                         </div>
-                                        <p className="text-sm text-muted-foreground mb-1">{submission.email}</p>
+                                        <p className="text-sm text-muted-foreground mb-1">
+                                            {submission.email}
+                                            {submission.preferredContact === "Email" && (
+                                                <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                                                    Preferred
+                                                </span>
+                                            )}
+                                        </p>
                                         {submission.phone && (
                                             <p className="text-sm text-muted-foreground mb-2">
                                                 <a
@@ -66,6 +75,16 @@ export default async function InboxPage() {
                                                 >
                                                     {submission.phone}
                                                 </a>
+                                                {submission.preferredContact === "WhatsApp" && (
+                                                    <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                                        Preferred
+                                                    </span>
+                                                )}
+                                            </p>
+                                        )}
+                                        {submission.service && (
+                                            <p className="text-sm font-medium text-slate-700 mb-2">
+                                                Interested in: {submission.service}
                                             </p>
                                         )}
                                         <p className="text-sm whitespace-pre-wrap">{submission.message}</p>
