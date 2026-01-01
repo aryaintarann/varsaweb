@@ -95,11 +95,12 @@ export async function createPortfolioItem(formData: FormData) {
     try {
         const title = formData.get("title") as string;
         const description = formData.get("description") as string;
+        const category = (formData.get("category") as string) || "Project";
         const imageUrl = formData.get("imageUrl") as string;
         const link = formData.get("link") as string;
 
         await prisma.portfolioItem.create({
-            data: { title, description, imageUrl, link },
+            data: { title, description, category, imageUrl, link },
         });
 
         revalidatePath("/admin/portfolio");
@@ -114,12 +115,13 @@ export async function updatePortfolioItem(id: string, formData: FormData) {
     try {
         const title = formData.get("title") as string;
         const description = formData.get("description") as string;
+        const category = (formData.get("category") as string) || "Project";
         const imageUrl = formData.get("imageUrl") as string;
         const link = formData.get("link") as string;
 
         await prisma.portfolioItem.update({
             where: { id },
-            data: { title, description, imageUrl, link },
+            data: { title, description, category, imageUrl, link },
         });
 
         revalidatePath("/admin/portfolio");

@@ -4,6 +4,7 @@ import { createPortfolioItem } from "@/actions/admin-actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { ImageUpload } from "@/components/ui/image-upload";
 import { ArrowLeft, Save } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -12,12 +13,14 @@ import { useState } from "react";
 export default function CreatePortfolioPage() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [imageUrl, setImageUrl] = useState("");
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setLoading(true);
 
         const formData = new FormData(e.currentTarget);
+        formData.set("imageUrl", imageUrl);
         const result = await createPortfolioItem(formData);
 
         if (result.success) {
@@ -46,15 +49,24 @@ export default function CreatePortfolioPage() {
                 </div>
 
                 <div className="space-y-2">
+                    <label className="text-sm font-medium">Category</label>
+                    <Input name="category" placeholder="E-Commerce, Landing Page, etc." defaultValue="Project" />
+                </div>
+
+                <div className="space-y-2">
                     <label className="text-sm font-medium">Description</label>
                     <Textarea name="description" placeholder="Describe this project..." rows={4} required />
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-sm font-medium">Image URL</label>
-                    <Input name="imageUrl" placeholder="https://example.com/image.jpg" />
+                    <label className="text-sm font-medium">Project Image</label>
+                    <ImageUpload
+                        value={imageUrl}
+                        onChange={setImageUrl}
+                        onRemove={() => setImageUrl("")}
+                    />
                     <p className="text-xs text-muted-foreground">
-                        Enter a URL to an image for this portfolio item.
+                        Upload an image or leave empty to use default.
                     </p>
                 </div>
 

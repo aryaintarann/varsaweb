@@ -4,6 +4,7 @@ import { updatePortfolioItem } from "@/actions/admin-actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { ImageUpload } from "@/components/ui/image-upload";
 import { ArrowLeft, Save } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,6 +14,7 @@ interface PortfolioItem {
     id: string;
     title: string;
     description: string;
+    category: string;
     imageUrl: string | null;
     link: string | null;
 }
@@ -20,12 +22,14 @@ interface PortfolioItem {
 export function EditPortfolioForm({ item }: { item: PortfolioItem }) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [imageUrl, setImageUrl] = useState(item.imageUrl || "");
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setLoading(true);
 
         const formData = new FormData(e.currentTarget);
+        formData.set("imageUrl", imageUrl);
         const result = await updatePortfolioItem(item.id, formData);
 
         if (result.success) {
@@ -54,13 +58,22 @@ export function EditPortfolioForm({ item }: { item: PortfolioItem }) {
                 </div>
 
                 <div className="space-y-2">
+                    <label className="text-sm font-medium">Category</label>
+                    <Input name="category" defaultValue={item.category} />
+                </div>
+
+                <div className="space-y-2">
                     <label className="text-sm font-medium">Description</label>
                     <Textarea name="description" defaultValue={item.description} rows={4} required />
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-sm font-medium">Image URL</label>
-                    <Input name="imageUrl" defaultValue={item.imageUrl || ""} />
+                    <label className="text-sm font-medium">Project Image</label>
+                    <ImageUpload
+                        value={imageUrl}
+                        onChange={setImageUrl}
+                        onRemove={() => setImageUrl("")}
+                    />
                 </div>
 
                 <div className="space-y-2">

@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, FileText, Briefcase, Mail, LogOut } from "lucide-react";
+import { LayoutDashboard, FileText, Briefcase, Mail, LogOut, Settings, HelpCircle } from "lucide-react";
 
 export default async function AdminLayout({
     children,
@@ -12,7 +12,7 @@ export default async function AdminLayout({
     const session = await auth();
 
     if (!session) {
-        redirect("/api/auth/signin"); // Or custom login page
+        redirect("/auth/login");
     }
 
     return (
@@ -25,9 +25,13 @@ export default async function AdminLayout({
                     </Link>
                 </div>
                 <nav className="flex-1 p-4 space-y-2">
-                    <Link href="/admin" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md bg-secondary text-primary">
+                    <Link href="/admin" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
                         <LayoutDashboard className="w-4 h-4" />
                         Dashboard
+                    </Link>
+                    <Link href="/admin/settings" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+                        <Settings className="w-4 h-4" />
+                        Site Settings
                     </Link>
                     <Link href="/admin/services" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
                         <FileText className="w-4 h-4" />
@@ -36,6 +40,10 @@ export default async function AdminLayout({
                     <Link href="/admin/portfolio" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
                         <Briefcase className="w-4 h-4" />
                         Portfolio
+                    </Link>
+                    <Link href="/admin/faq" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+                        <HelpCircle className="w-4 h-4" />
+                        FAQ
                     </Link>
                     <Link href="/admin/inbox" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
                         <Mail className="w-4 h-4" />

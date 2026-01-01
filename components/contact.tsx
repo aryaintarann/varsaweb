@@ -6,7 +6,21 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Loader2, Mail, Phone, MapPin } from "lucide-react";
 import { toast } from "sonner";
 
-export function Contact() {
+interface ContactProps {
+    settings: {
+        contactEmail: string;
+        contactPhone: string;
+        contactAddress: string;
+    } | null;
+}
+
+const defaults = {
+    contactEmail: "hello@varsaweb.com",
+    contactPhone: "+62 812 3456 7890",
+    contactAddress: "Jakarta Selatan, Indonesia",
+};
+
+export function Contact({ settings }: ContactProps) {
     const [loading, setLoading] = useState(false);
     const sectionRef = useRef(null);
 
@@ -17,6 +31,8 @@ export function Contact() {
 
     const yInfo = useTransform(scrollYProgress, [0, 1], [40, -40]);
     const yForm = useTransform(scrollYProgress, [0, 1], [60, -60]);
+
+    const data = settings || defaults;
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -57,7 +73,7 @@ export function Contact() {
                                 </div>
                                 <div>
                                     <h5 className="text-white font-bold">Email</h5>
-                                    <p className="text-slate-400">hello@varsaweb.com</p>
+                                    <p className="text-slate-400">{data.contactEmail}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4 group cursor-pointer p-4 rounded-xl hover:bg-white/5 transition-all">
@@ -66,7 +82,7 @@ export function Contact() {
                                 </div>
                                 <div>
                                     <h5 className="text-white font-bold">WhatsApp / Telepon</h5>
-                                    <p className="text-slate-400">+62 812 3456 7890</p>
+                                    <p className="text-slate-400">{data.contactPhone}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4 group cursor-pointer p-4 rounded-xl hover:bg-white/5 transition-all">
@@ -75,7 +91,7 @@ export function Contact() {
                                 </div>
                                 <div>
                                     <h5 className="text-white font-bold">Lokasi Studio</h5>
-                                    <p className="text-slate-400">Jakarta Selatan, Indonesia</p>
+                                    <p className="text-slate-400">{data.contactAddress}</p>
                                 </div>
                             </div>
                         </div>

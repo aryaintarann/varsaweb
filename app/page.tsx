@@ -6,8 +6,18 @@ import { Portfolio } from "@/components/portfolio";
 import { Faq } from "@/components/faq";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
+import { getSiteSettings, getFaqs } from "@/actions/settings-actions";
+import { getServices, getPortfolioItems } from "@/actions/admin-actions";
 
-export default function Home() {
+export default async function Home() {
+  // Fetch data from database
+  const [settings, faqs, services, portfolioItems] = await Promise.all([
+    getSiteSettings(),
+    getFaqs(),
+    getServices(),
+    getPortfolioItems(),
+  ]);
+
   return (
     <main className="min-h-screen relative overflow-hidden">
       {/* Ambient Background Effects */}
@@ -18,12 +28,12 @@ export default function Home() {
       </div>
 
       <Navbar />
-      <Hero />
-      <About />
-      <Services />
-      <Portfolio />
-      <Faq />
-      <Contact />
+      <Hero settings={settings} />
+      <About settings={settings} />
+      <Services services={services} />
+      <Portfolio items={portfolioItems} />
+      <Faq faqs={faqs} />
+      <Contact settings={settings} />
       <Footer />
     </main>
   );

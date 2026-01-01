@@ -5,7 +5,31 @@ import { Target, HeartHandshake } from "lucide-react";
 import Image from "next/image";
 import { useRef } from "react";
 
-export function About() {
+interface AboutProps {
+    settings: {
+        aboutImage: string | null;
+        aboutTitle: string;
+        aboutParagraph1: string;
+        aboutParagraph2: string;
+        aboutFeature1: string;
+        aboutFeature1Desc: string;
+        aboutFeature2: string;
+        aboutFeature2Desc: string;
+    } | null;
+}
+
+const defaults = {
+    aboutImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800",
+    aboutTitle: "Lebih Dari Sekadar Jasa Pembuatan Website",
+    aboutParagraph1: "VarsaWeb lahir dari semangat untuk membantu UMKM dan perusahaan Indonesia bersaing di era digital. Kami bukan hanya menulis kode, kami merancang solusi bisnis.",
+    aboutParagraph2: "Tim kami terdiri dari desainer UI/UX yang kreatif, developer yang handal, dan ahli strategi digital yang siap memastikan website Anda tidak hanya bagus dilihat, tapi juga menghasilkan profit.",
+    aboutFeature1: "Fokus Hasil",
+    aboutFeature1Desc: "Desain yang mengutamakan user experience dan konversi.",
+    aboutFeature2: "Partner Jangka Panjang",
+    aboutFeature2Desc: "Kami menemani Anda dari awal pembuatan hingga maintenance.",
+};
+
+export function About({ settings }: AboutProps) {
     const sectionRef = useRef(null);
     const { scrollYProgress } = useScroll({
         target: sectionRef,
@@ -14,6 +38,12 @@ export function About() {
 
     const yImage = useTransform(scrollYProgress, [0, 1], [50, -50]);
     const yContent = useTransform(scrollYProgress, [0, 1], [30, -30]);
+
+    const data = {
+        ...defaults,
+        ...settings,
+        aboutImage: settings?.aboutImage || defaults.aboutImage,
+    };
 
     return (
         <section ref={sectionRef} id="about" className="py-20 bg-white/2 overflow-hidden">
@@ -31,7 +61,7 @@ export function About() {
                         <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-pink-500/20 rounded-full blur-2xl"></div>
                         <div className="relative aspect-video md:aspect-square overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
                             <Image
-                                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
+                                src={data.aboutImage}
                                 alt="Tim VarsaWeb"
                                 fill
                                 className="object-cover"
@@ -51,17 +81,13 @@ export function About() {
                             Tentang Kami
                         </span>
                         <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                            Lebih Dari Sekadar Jasa Pembuatan Website
+                            {data.aboutTitle}
                         </h2>
                         <p className="text-slate-400 mb-6 leading-relaxed">
-                            VarsaWeb lahir dari semangat untuk membantu UMKM dan perusahaan
-                            Indonesia bersaing di era digital. Kami bukan hanya menulis kode,
-                            kami merancang solusi bisnis.
+                            {data.aboutParagraph1}
                         </p>
                         <p className="text-slate-400 mb-8 leading-relaxed">
-                            Tim kami terdiri dari desainer UI/UX yang kreatif, developer yang
-                            handal, dan ahli strategi digital yang siap memastikan website Anda
-                            tidak hanya bagus dilihat, tapi juga menghasilkan profit.
+                            {data.aboutParagraph2}
                         </p>
 
                         <div className="space-y-4">
@@ -70,9 +96,9 @@ export function About() {
                                     <Target className="w-5 h-5" />
                                 </div>
                                 <div>
-                                    <h4 className="text-white font-bold">Fokus Hasil</h4>
+                                    <h4 className="text-white font-bold">{data.aboutFeature1}</h4>
                                     <p className="text-sm text-slate-500">
-                                        Desain yang mengutamakan user experience dan konversi.
+                                        {data.aboutFeature1Desc}
                                     </p>
                                 </div>
                             </div>
@@ -81,9 +107,9 @@ export function About() {
                                     <HeartHandshake className="w-5 h-5" />
                                 </div>
                                 <div>
-                                    <h4 className="text-white font-bold">Partner Jangka Panjang</h4>
+                                    <h4 className="text-white font-bold">{data.aboutFeature2}</h4>
                                     <p className="text-sm text-slate-500">
-                                        Kami menemani Anda dari awal pembuatan hingga maintenance.
+                                        {data.aboutFeature2Desc}
                                     </p>
                                 </div>
                             </div>
