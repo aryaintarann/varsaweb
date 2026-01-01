@@ -1,63 +1,74 @@
-import { prisma } from "@/lib/prisma";
-import { ServiceCard } from "@/components/service-card";
+"use client";
 
-// Fallback services matching HTML content
+import { ParallaxSection } from "./parallax-section";
+import { ServiceCard } from "./service-card";
+
+interface Service {
+    id: string;
+    title: string;
+    description: string;
+    icon: string;
+    order: number;
+}
+
+interface ServicesProps {
+    services: Service[];
+}
+
 const staticServices = [
     {
         id: "1",
-        title: "Website Profil & Branding",
-        description: "Ideal untuk Company Profile, Portfolio Pribadi, Blog, Landing Page, atau Website Organisasi/Komunitas.",
+        title: "Company Profile Website",
+        description: "Boost your business credibility with an elegant website illustrating professionalism and corporate values. SEO-friendly features included.",
         icon: "layout",
+        order: 0,
     },
     {
         id: "2",
-        title: "E-Commerce & Bisnis",
-        description: "Solusi jualan online. Toko Online, Katalog Produk, Website Booking Hotel/Travel, hingga Marketplace.",
+        title: "E-Commerce / Online Store",
+        description: "Complete solution for online selling with shopping cart systems, integrated payments (Midtrans, etc.), and easy product management.",
         icon: "shopping-bag",
+        order: 1,
     },
     {
         id: "3",
-        title: "Custom & Sistem Web",
-        description: "Mengerjakan jenis website apapun sesuai request. Portal Berita, Web Sekolah, Sistem Informasi, Forum, dll.",
+        title: "High Conversion Landing Page",
+        description: "Specialized pages designed to convert visitors into customers with strategic copywriting and persuasive design.",
+        icon: "target",
+        order: 2,
+    },
+    {
+        id: "4",
+        title: "Custom Web Application",
+        description: "Need unique features? We build web apps tailored to your specific business needs, from reservation systems to analytics dashboards.",
         icon: "code-2",
-    }
+        order: 3,
+    },
 ];
 
-export async function Services() {
-    let services = [];
-    try {
-        services = await prisma.service.findMany();
-    } catch (e) {
-        // ignore
-    }
-
-    if (services.length === 0) {
-        services = staticServices;
-    }
+export function Services({ services }: ServicesProps) {
+    const data = services.length > 0 ? services : staticServices;
 
     return (
-        <section id="services" className="py-20 relative">
+        <ParallaxSection id="services" className="py-20 relative bg-[#F0FAFA]" speed={0.12}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
-                    <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm mb-2 block">
-                        Layanan Kami
+                    <span className="text-[#006666] font-bold tracking-wider uppercase text-sm mb-2 block">
+                        Our Services
                     </span>
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                        Pembuatan Segala Jenis Website
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#006666] mb-4">
+                        Digital Solutions for Every Need
                     </h2>
-                    <p className="text-slate-400">
-                        Apapun kebutuhan website Anda, kami siap mewujudkannya dengan teknologi terbaru.
+                    <p className="text-[#334155] max-w-xl mx-auto">
+                        From simple websites to complex web apps, we are ready to realize your digital vision.
                     </p>
                 </div>
-
-                <div className="grid md:grid-cols-3 gap-6">
-                    {services.map((service: any, index: number) => {
-                        return (
-                            <ServiceCard key={service.id} service={service} index={index} />
-                        );
-                    })}
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {data.sort((a, b) => a.order - b.order).map((service, index) => (
+                        <ServiceCard key={service.id} service={service} index={index} />
+                    ))}
                 </div>
             </div>
-        </section>
+        </ParallaxSection>
     );
 }

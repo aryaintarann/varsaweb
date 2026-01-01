@@ -1,8 +1,9 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, FileText, Briefcase, Mail, LogOut } from "lucide-react";
+import { LayoutDashboard, FileText, Briefcase, Mail, LogOut, Settings, HelpCircle, Star, DollarSign } from "lucide-react";
 
 export default async function AdminLayout({
     children,
@@ -12,7 +13,7 @@ export default async function AdminLayout({
     const session = await auth();
 
     if (!session) {
-        redirect("/api/auth/signin"); // Or custom login page
+        redirect("/auth/login");
     }
 
     return (
@@ -20,14 +21,26 @@ export default async function AdminLayout({
             {/* Sidebar */}
             <aside className="w-64 bg-background border-r hidden md:flex flex-col">
                 <div className="h-16 flex items-center px-6 border-b">
-                    <Link href="/" className="font-bold text-lg tracking-tight">
+                    <Link href="/" className="flex items-center gap-2 font-bold text-lg tracking-tight">
+                        <div className="relative w-8 h-8">
+                            <Image
+                                src="/logo-brand.png"
+                                alt="VarsaWeb Logo"
+                                fill
+                                className="object-contain"
+                            />
+                        </div>
                         Varsa<span className="text-primary">Admin</span>
                     </Link>
                 </div>
                 <nav className="flex-1 p-4 space-y-2">
-                    <Link href="/admin" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md bg-secondary text-primary">
+                    <Link href="/admin" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
                         <LayoutDashboard className="w-4 h-4" />
                         Dashboard
+                    </Link>
+                    <Link href="/admin/settings" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+                        <Settings className="w-4 h-4" />
+                        Site Settings
                     </Link>
                     <Link href="/admin/services" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
                         <FileText className="w-4 h-4" />
@@ -37,9 +50,21 @@ export default async function AdminLayout({
                         <Briefcase className="w-4 h-4" />
                         Portfolio
                     </Link>
+                    <Link href="/admin/pricing" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+                        <DollarSign className="w-4 h-4" />
+                        Pricing
+                    </Link>
+                    <Link href="/admin/faq" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+                        <HelpCircle className="w-4 h-4" />
+                        FAQ
+                    </Link>
                     <Link href="/admin/inbox" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
                         <Mail className="w-4 h-4" />
                         Inbox
+                    </Link>
+                    <Link href="/admin/reviews" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+                        <Star className="w-4 h-4" />
+                        Reviews
                     </Link>
                 </nav>
                 <div className="p-4 border-t">

@@ -2,32 +2,79 @@
 
 @layer utilities {
   .text-gradient {
-    background: linear-gradient(to right, #818cf8, #c084fc, #f472b6);
+    background: linear-gradient(to right, #004D4D, #008080);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   .glass-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(244, 247, 250, 0.8);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(13, 31, 56, 0.1);
   }
 
   .glass-nav {
-    background: rgba(11, 15, 25, 0.8);
+    background: rgba(13, 31, 56, 0.95);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(77, 208, 199, 0.2);
+  }
+
+  /* Tech Background Animations */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 4s ease-in-out infinite;
   }
 }
 
 :root {
-  --background: #0B0F19;
-  --foreground: #e2e8f0;
+  --background: #FFFFFF;
+  --foreground: #334155;
+  --primary: #0D1F38;
+  --accent: #4DD0C7;
+  --surface: #F4F7FA;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
+}
+
+/* Keyframe Animations */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.2;
+    transform: scale(1.05);
+  }
 }

@@ -2,28 +2,44 @@ import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
 import { Services } from "@/components/services";
+import { Pricing } from "@/components/pricing";
 import { Portfolio } from "@/components/portfolio";
+import { Testimonials } from "@/components/testimonials";
 import { Faq } from "@/components/faq";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
+import { getSiteSettings, getFaqs } from "@/actions/settings-actions";
+import { getServices, getPortfolioItems } from "@/actions/admin-actions";
+import { getSatisfactionPercentage, getApprovedReviews } from "@/actions/review-actions";
+import { getPricingPlans } from "@/actions/pricing-actions";
 
-export default function Home() {
+export default async function Home() {
+  // Fetch data from database
+  const [settings, faqs, services, portfolioItems, satisfactionPercentage, reviews, pricingPlans] = await Promise.all([
+    getSiteSettings(),
+    getFaqs(),
+    getServices(),
+    getPortfolioItems(),
+    getSatisfactionPercentage(),
+    getApprovedReviews(),
+    getPricingPlans(),
+  ]);
+
   return (
-    <main className="min-h-screen relative overflow-hidden">
-      {/* Ambient Background Effects */}
-      <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/20 rounded-full mix-blend-screen filter blur-[100px] opacity-50 animate-blob"></div>
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-pink-500/20 rounded-full mix-blend-screen filter blur-[100px] opacity-50 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-32 left-1/3 w-96 h-96 bg-violet-500/20 rounded-full mix-blend-screen filter blur-[100px] opacity-50 animate-blob animation-delay-4000"></div>
-      </div>
-
+    <main className="min-h-screen relative overflow-hidden bg-[#F0FAFA]">
       <Navbar />
-      <Hero />
-      <About />
-      <Services />
-      <Portfolio />
-      <Faq />
-      <Contact />
+      <Hero
+        settings={settings}
+        portfolioCount={portfolioItems.length}
+        satisfactionPercentage={satisfactionPercentage}
+      />
+      <About settings={settings} />
+      <Services services={services} />
+      <Pricing plans={pricingPlans} />
+      <Portfolio items={portfolioItems} />
+      <Testimonials reviews={reviews} />
+      <Faq faqs={faqs} />
+      <Contact settings={settings} />
       <Footer />
     </main>
   );

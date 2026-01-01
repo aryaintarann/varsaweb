@@ -16,11 +16,45 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+model SiteSettings {
+  id              String  @id @default("main")
+  // Hero Section
+  heroBadge       String  @default("Partner Digital Terbaik #1")
+  heroTitle       String  @default("Bangun Identitas Digital Yang Tak Terlupakan.")
+  heroDescription String  @default("VarsaWeb membantu bisnis Anda bertransformasi dengan website yang cepat, estetik, dan berorientasi pada konversi penjualan.")
+  heroCta1        String  @default("Konsultasi Gratis")
+  heroCta2        String  @default("Lihat Karya Kami")
+  stat1Value      String  @default("150+")
+  stat1Label      String  @default("Project Selesai")
+  stat2Value      String  @default("99%")
+  stat2Label      String  @default("Kepuasan Klien")
+  stat3Value      String  @default("24/7")
+  stat3Label      String  @default("Support Teknis")
+  stat4Value      String  @default("3-7")
+  stat4Label      String  @default("Hari Pengerjaan")
+  // About Section
+  aboutImage      String?
+  aboutTitle      String  @default("Lebih Dari Sekadar Jasa Pembuatan Website")
+  aboutParagraph1 String  @default("VarsaWeb lahir dari semangat untuk membantu UMKM dan perusahaan Indonesia bersaing di era digital. Kami bukan hanya menulis kode, kami merancang solusi bisnis.")
+  aboutParagraph2 String  @default("Tim kami terdiri dari desainer UI/UX yang kreatif, developer yang handal, dan ahli strategi digital yang siap memastikan website Anda tidak hanya bagus dilihat, tapi juga menghasilkan profit.")
+  aboutFeature1   String  @default("Fokus Hasil")
+  aboutFeature1Desc String @default("Desain yang mengutamakan user experience dan konversi.")
+  aboutFeature2   String  @default("Partner Jangka Panjang")
+  aboutFeature2Desc String @default("Kami menemani Anda dari awal pembuatan hingga maintenance.")
+  // Contact Section
+  contactEmail    String  @default("hello@varsaweb.com")
+  contactPhone    String  @default("+62 812 3456 7890")
+  contactAddress  String  @default("Jakarta Selatan, Indonesia")
+  
+  updatedAt DateTime @updatedAt
+}
+
 model Service {
   id          String   @id @default(cuid())
   title       String
   description String
-  icon        String   // Lucide icon name
+  icon        String
+  order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -29,17 +63,56 @@ model PortfolioItem {
   id          String   @id @default(cuid())
   title       String
   description String
+  category    String   @default("Project")
   imageUrl    String?
   link        String?
+  order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Faq {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model ContactSubmission {
   id        String   @id @default(cuid())
   name      String
   email     String
+  phone     String?
+  service   String?
+  preferredContact String?
   message   String
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  name      String
+  company   String?
+  rating    Int      // 1-5 stars
+  message   String
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model PricingPlan {
+  id            String   @id @default(cuid())
+  name          String
+  description   String
+  price         Float
+  discountPrice Float?   // Optional discounted price
+  discountLabel String?  // e.g. "Hemat 20%"
+  discountTerms String?  // S&K diskon (Terms & Conditions)
+  features      String   // JSON array of features
+  isPopular     Boolean  @default(false)
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

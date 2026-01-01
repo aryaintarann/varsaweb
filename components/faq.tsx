@@ -1,74 +1,118 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { TechCardBackground } from "./ui/tech-card-background";
 
-const faqs = [
+interface FaqItem {
+    id: string;
+    question: string;
+    answer: string;
+    order: number;
+}
+
+interface FaqProps {
+    faqs: FaqItem[];
+}
+
+const defaultFaqs = [
     {
-        question: "Berapa lama proses pembuatan website?",
-        answer: "Waktu pengerjaan bervariasi tergantung kompleksitas. Untuk Landing Page biasanya 3-5 hari kerja. Untuk Company Profile 5-7 hari kerja, dan Toko Online sekitar 7-14 hari kerja setelah semua materi kami terima."
+        id: "1",
+        question: "How long does it take to create a website?",
+        answer: "Development time varies depending on project complexity. For a standard website, it usually takes 1-2 weeks. websites with custom features like e-commerce or booking systems can take 3-4 weeks.",
+        order: 0,
     },
     {
-        question: "Apakah saya mendapatkan akses admin?",
-        answer: "Tentu saja! Setelah website selesai dan pelunasan dilakukan, kami akan memberikan akses penuh (username & password) ke dashboard admin. Anda bisa mengedit konten sendiri dengan mudah."
+        id: "2",
+        question: "Does the price include domain and hosting?",
+        answer: "Our package prices do not include domain and hosting to give you flexibility in choosing a provider. However, we are happy to assist you in the setup process with your chosen domain and hosting.",
+        order: 1,
     },
     {
-        question: "Apakah ada biaya perpanjangan tahunan?",
-        answer: "Ya, ada biaya perpanjangan untuk Domain dan Hosting setiap tahunnya. Biaya ini wajib dibayarkan agar website Anda tetap online. Kami akan menginfokan 1 bulan sebelum masa aktif berakhir."
+        id: "3",
+        question: "What is included in the maintenance service?",
+        answer: "Our maintenance service includes routine backups, security updates, uptime monitoring, minor bug fixes, and technical support via WhatsApp or email during business hours.",
+        order: 2,
     },
     {
-        question: "Apakah sudah termasuk optimasi SEO?",
-        answer: "Semua paket kami sudah termasuk SEO Basic (Struktur URL yang rapi, Meta Tags, Sitemap, dan pendaftaran ke Google Search Console). Untuk SEO lanjutan, kami memiliki layanan terpisah."
-    }
+        id: "4",
+        question: "Can I request design revisions?",
+        answer: "Absolutely! We provide design revisions according to the selected package. Each milestone will go through an approval process from you before we proceed to the next stage.",
+        order: 3,
+    },
 ];
 
-export function Faq() {
+function FaqItemComponent({ faq, index }: { faq: FaqItem; index: number }) {
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
-        <section id="faq" className="py-20 bg-white/[0.02]">
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-50px" }}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
+            className="bg-white border-2 border-[#006666]/10 rounded-2xl p-1 shadow-md hover:shadow-lg hover:border-[#006666]/30 transition-all duration-300 relative overflow-hidden"
+        >
+            <TechCardBackground />
+            <div className="relative z-10">
+                <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="flex items-center justify-between w-full p-5 text-left"
+                >
+                    <span className="font-semibold text-[#006666]">{faq.question}</span>
+                    <ChevronDown
+                        className={`w-5 h-5 text-[#006666] transition-transform ${isOpen ? "rotate-180" : ""}`}
+                    />
+                </button>
+                <AnimatePresence initial={false}>
+                    {isOpen && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden"
+                        >
+                            <p className="px-5 pb-5 text-[#334155] leading-relaxed">{faq.answer}</p>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+        </motion.div>
+    );
+}
+
+export function Faq({ faqs }: FaqProps) {
+    const sectionRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "end start"],
+    });
+
+    const yHeader = useTransform(scrollYProgress, [0, 1], [40, -40]);
+
+    const data = faqs.length > 0 ? faqs : defaultFaqs;
+
+    return (
+        <section ref={sectionRef} id="faq" className="py-20 bg-[#F0FAFA] overflow-hidden">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-12">
-                    <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm mb-2 block">FAQ</span>
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Pertanyaan Umum</h2>
-                    <p className="text-slate-400">Hal-hal yang sering ditanyakan oleh klien kami.</p>
-                </div>
+                <motion.div style={{ y: yHeader }} className="text-center mb-12 will-change-transform">
+                    <span className="text-[#006666] font-bold tracking-wider uppercase text-sm mb-2 block">FAQ</span>
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#006666] mb-4">
+                        Frequently Asked Questions
+                    </h2>
+                    <p className="text-[#334155] max-w-xl mx-auto">
+                        Some common questions asked by our clients.
+                    </p>
+                </motion.div>
 
                 <div className="space-y-4">
-                    {faqs.map((faq, index) => (
-                        <FaqItem key={index} faq={faq} />
+                    {data.sort((a, b) => a.order - b.order).map((faq, index) => (
+                        <FaqItemComponent key={faq.id} faq={faq} index={index} />
                     ))}
                 </div>
             </div>
         </section>
-    );
-}
-
-function FaqItem({ faq }: { faq: { question: string; answer: string } }) {
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-        <div className="glass-card rounded-2xl p-1">
-            <div
-                className="group"
-                onClick={() => setIsOpen(!isOpen)}
-            >
-                <div className="flex justify-between items-center font-medium cursor-pointer list-none p-4 text-white hover:text-indigo-400 transition-colors">
-                    <span>{faq.question}</span>
-                    <span className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}>
-                        <ChevronDown className="w-5 h-5" />
-                    </span>
-                </div>
-                <motion.div
-                    initial={false}
-                    animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                >
-                    <div className="text-slate-400 px-4 pb-4 text-sm leading-relaxed border-t border-white/5 pt-4">
-                        {faq.answer}
-                    </div>
-                </motion.div>
-            </div>
-        </div>
     );
 }
