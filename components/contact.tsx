@@ -67,7 +67,10 @@ export function Contact({ settings }: ContactProps) {
                         </p>
 
                         <div className="space-y-6">
-                            <div className="flex items-center gap-4 group cursor-pointer p-4 rounded-xl hover:bg-white/5 transition-all">
+                            <a
+                                href={`mailto:${data.contactEmail}`}
+                                className="flex items-center gap-4 group cursor-pointer p-4 rounded-xl hover:bg-white/5 transition-all"
+                            >
                                 <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
                                     <Mail className="w-6 h-6" />
                                 </div>
@@ -75,16 +78,21 @@ export function Contact({ settings }: ContactProps) {
                                     <h5 className="text-white font-bold">Email</h5>
                                     <p className="text-slate-400">{data.contactEmail}</p>
                                 </div>
-                            </div>
-                            <div className="flex items-center gap-4 group cursor-pointer p-4 rounded-xl hover:bg-white/5 transition-all">
+                            </a>
+                            <a
+                                href={`https://wa.me/${data.contactPhone.replace(/\D/g, '')}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-4 group cursor-pointer p-4 rounded-xl hover:bg-white/5 transition-all"
+                            >
                                 <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
                                     <Phone className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <h5 className="text-white font-bold">WhatsApp / Telepon</h5>
+                                    <h5 className="text-white font-bold">WhatsApp</h5>
                                     <p className="text-slate-400">{data.contactPhone}</p>
                                 </div>
-                            </div>
+                            </a>
                             <div className="flex items-center gap-4 group cursor-pointer p-4 rounded-xl hover:bg-white/5 transition-all">
                                 <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
                                     <MapPin className="w-6 h-6" />
@@ -128,6 +136,16 @@ export function Contact({ settings }: ContactProps) {
                                         placeholder="john@example.com"
                                     />
                                 </div>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-300 mb-2">Nomor WhatsApp</label>
+                                <input
+                                    type="tel"
+                                    name="phone"
+                                    required
+                                    className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-slate-600"
+                                    placeholder="0812 3456 7890"
+                                />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-slate-300 mb-2">Layanan yang Diminati</label>

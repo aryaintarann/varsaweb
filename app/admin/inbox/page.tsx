@@ -45,7 +45,19 @@ export default async function InboxPage() {
                                                 </span>
                                             )}
                                         </div>
-                                        <p className="text-sm text-muted-foreground mb-2">{submission.email}</p>
+                                        <p className="text-sm text-muted-foreground mb-1">{submission.email}</p>
+                                        {submission.phone && (
+                                            <p className="text-sm text-muted-foreground mb-2">
+                                                <a
+                                                    href={`https://wa.me/${submission.phone.replace(/\D/g, '')}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-green-500 hover:underline"
+                                                >
+                                                    {submission.phone}
+                                                </a>
+                                            </p>
+                                        )}
                                         <p className="text-sm whitespace-pre-wrap">{submission.message}</p>
                                         <p className="text-xs text-muted-foreground mt-3">
                                             {new Date(submission.createdAt).toLocaleDateString('id-ID', {
