@@ -5,6 +5,7 @@ import { submitContact } from "@/actions/contact";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Loader2, Mail, Phone, MapPin } from "lucide-react";
 import { toast } from "sonner";
+import { TechCardBackground } from "./ui/tech-card-background";
 
 interface ContactProps {
     settings: {
@@ -112,97 +113,100 @@ export function Contact({ settings }: ContactProps) {
                         viewport={{ once: false, margin: "-100px" }}
                         transition={{ duration: 0.5 }}
                         style={{ y: yForm }}
-                        className="bg-[#4DD0C7]/20 p-8 rounded-3xl border-2 border-[#4DD0C7]/40 will-change-transform shadow-lg"
+                        className="bg-white p-8 rounded-3xl border-2 border-[#006666]/10 will-change-transform shadow-lg hover:shadow-xl hover:border-[#006666]/30 transition-all duration-300 relative overflow-hidden"
                     >
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="grid md:grid-cols-2 gap-6">
+                        <TechCardBackground />
+                        <div className="relative z-10">
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label className="block text-sm font-medium text-[#006666] mb-2">Name</label>
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            required
+                                            className="w-full bg-white border border-navy/10 rounded-xl px-4 py-3 text-navy focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal transition-all placeholder:text-foreground/40"
+                                            placeholder="Your Name"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-[#006666] mb-2">Email</label>
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            required
+                                            className="w-full bg-white border border-navy/10 rounded-xl px-4 py-3 text-navy focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal transition-all placeholder:text-foreground/40"
+                                            placeholder="john@example.com"
+                                        />
+                                    </div>
+                                </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-[#006666] mb-2">Name</label>
+                                    <label className="block text-sm font-medium text-[#006666] mb-2">WhatsApp Number</label>
                                     <input
-                                        type="text"
-                                        name="name"
+                                        type="tel"
+                                        name="phone"
                                         required
                                         className="w-full bg-white border border-navy/10 rounded-xl px-4 py-3 text-navy focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal transition-all placeholder:text-foreground/40"
-                                        placeholder="Your Name"
+                                        placeholder="+62 812 3456 7890"
                                     />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-[#006666] mb-3">Preferred Contact Method</label>
+                                    <div className="flex gap-6">
+                                        <label className="flex items-center gap-2 cursor-pointer group">
+                                            <input
+                                                type="radio"
+                                                name="preferredContact"
+                                                value="Email"
+                                                defaultChecked
+                                                className="w-4 h-4 text-teal focus:ring-teal border-navy/20 accent-teal"
+                                            />
+                                            <span className="text-[#334155] group-hover:text-[#006666] transition-colors">Email</span>
+                                        </label>
+                                        <label className="flex items-center gap-2 cursor-pointer group">
+                                            <input
+                                                type="radio"
+                                                name="preferredContact"
+                                                value="WhatsApp"
+                                                className="w-4 h-4 text-teal focus:ring-teal border-navy/20 accent-teal"
+                                            />
+                                            <span className="text-[#334155] group-hover:text-[#006666] transition-colors">WhatsApp</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-[#006666] mb-2">Service Interested</label>
+                                    <select
+                                        name="service"
+                                        className="w-full bg-white border border-navy/10 rounded-xl px-4 py-3 text-navy focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal transition-all"
+                                    >
+                                        <option>Company Profile</option>
+                                        <option>Online Store / E-Commerce</option>
+                                        <option>Landing Page</option>
+                                        <option>Other</option>
+                                    </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-[#006666] mb-2">Email</label>
-                                    <input
-                                        type="email"
-                                        name="email"
+                                    <label className="block text-sm font-medium text-[#006666] mb-2">Message</label>
+                                    <textarea
+                                        name="message"
                                         required
+                                        rows={4}
                                         className="w-full bg-white border border-navy/10 rounded-xl px-4 py-3 text-navy focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal transition-all placeholder:text-foreground/40"
-                                        placeholder="john@example.com"
+                                        placeholder="Tell us about your website needs..."
                                     />
                                 </div>
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-[#006666] mb-2">WhatsApp Number</label>
-                                <input
-                                    type="tel"
-                                    name="phone"
-                                    required
-                                    className="w-full bg-white border border-navy/10 rounded-xl px-4 py-3 text-navy focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal transition-all placeholder:text-foreground/40"
-                                    placeholder="+62 812 3456 7890"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-[#006666] mb-3">Preferred Contact Method</label>
-                                <div className="flex gap-6">
-                                    <label className="flex items-center gap-2 cursor-pointer group">
-                                        <input
-                                            type="radio"
-                                            name="preferredContact"
-                                            value="Email"
-                                            defaultChecked
-                                            className="w-4 h-4 text-teal focus:ring-teal border-navy/20 accent-teal"
-                                        />
-                                        <span className="text-[#334155] group-hover:text-[#006666] transition-colors">Email</span>
-                                    </label>
-                                    <label className="flex items-center gap-2 cursor-pointer group">
-                                        <input
-                                            type="radio"
-                                            name="preferredContact"
-                                            value="WhatsApp"
-                                            className="w-4 h-4 text-teal focus:ring-teal border-navy/20 accent-teal"
-                                        />
-                                        <span className="text-[#334155] group-hover:text-[#006666] transition-colors">WhatsApp</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-[#006666] mb-2">Service Interested</label>
-                                <select
-                                    name="service"
-                                    className="w-full bg-white border border-navy/10 rounded-xl px-4 py-3 text-navy focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal transition-all"
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className="w-full bg-[#006666] hover:bg-[#004D4D] text-white font-bold py-4 rounded-xl shadow-lg shadow-[#006666]/25 transition-all transform hover:-translate-y-1 flex justify-center items-center"
                                 >
-                                    <option>Company Profile</option>
-                                    <option>Online Store / E-Commerce</option>
-                                    <option>Landing Page</option>
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-[#006666] mb-2">Message</label>
-                                <textarea
-                                    name="message"
-                                    required
-                                    rows={4}
-                                    className="w-full bg-white border border-navy/10 rounded-xl px-4 py-3 text-navy focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal transition-all placeholder:text-foreground/40"
-                                    placeholder="Tell us about your website needs..."
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="w-full bg-[#4DD0C7] hover:bg-[#4DD0C7]/90 text-[#006666] font-bold py-4 rounded-xl shadow-lg shadow-[#4DD0C7]/25 transition-all transform hover:-translate-y-1 flex justify-center items-center"
-                            >
-                                {loading ? <Loader2 className="animate-spin mr-2" /> : "Send Message"}
-                            </button>
-                        </form>
+                                    {loading ? <Loader2 className="animate-spin mr-2" /> : "Send Message"}
+                                </button>
+                            </form>
+                        </div>
                     </motion.div>
                 </div>
             </div>

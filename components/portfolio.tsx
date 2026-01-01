@@ -80,7 +80,7 @@ export function Portfolio({ items }: PortfolioProps) {
                     >
                         <Link
                             href="/portfolio"
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-[#4DD0C7] rounded-xl text-[#006666] font-semibold hover:bg-[#4DD0C7]/90 transition-all group"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-[#006666] rounded-xl text-white font-semibold hover:bg-[#004D4D] transition-all group shadow-md hover:shadow-lg"
                         >
                             View More Portfolio
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

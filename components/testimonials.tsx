@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { TechCardBackground } from "./ui/tech-card-background";
 
 interface Review {
     id: string;
@@ -88,38 +89,41 @@ export function Testimonials({ reviews }: TestimonialsProps) {
                                         animate={{ opacity: 1, x: 0 }}
                                         exit={{ opacity: 0, x: -100 }}
                                         transition={{ duration: 0.3 }}
-                                        className="bg-[#4DD0C7]/20 p-8 md:p-12 border-2 border-[#4DD0C7]/40 text-center rounded-3xl"
+                                        className="bg-white p-8 md:p-12 border-2 border-[#006666]/10 text-center rounded-3xl shadow-lg hover:shadow-xl transition-all relative"
                                     >
-                                        <Quote className="w-12 h-12 text-[#006666]/30 mx-auto mb-6" />
+                                        <TechCardBackground />
+                                        <div className="relative z-10">
+                                            <Quote className="w-12 h-12 text-[#006666]/30 mx-auto mb-6" />
 
-                                        {/* Message */}
-                                        <p className="text-[#334155] text-lg md:text-xl leading-relaxed mb-8">
-                                            "{reviews[currentIndex].message}"
-                                        </p>
+                                            {/* Message */}
+                                            <p className="text-[#334155] text-lg md:text-xl leading-relaxed mb-8">
+                                                "{reviews[currentIndex].message}"
+                                            </p>
 
-                                        {/* Stars */}
-                                        <div className="flex gap-1 justify-center mb-6">
-                                            {[1, 2, 3, 4, 5].map((star) => (
-                                                <Star
-                                                    key={star}
-                                                    className={`w-5 h-5 ${star <= reviews[currentIndex].rating
-                                                        ? "text-amber-400 fill-amber-400"
-                                                        : "text-[#334155]/20"
-                                                        }`}
-                                                />
-                                            ))}
-                                        </div>
-
-                                        {/* Author */}
-                                        <div className="flex items-center justify-center gap-3">
-                                            <div className="w-12 h-12 rounded-full bg-[#006666]/10 flex items-center justify-center text-[#006666] font-bold text-lg">
-                                                {reviews[currentIndex].name.charAt(0).toUpperCase()}
+                                            {/* Stars */}
+                                            <div className="flex gap-1 justify-center mb-6">
+                                                {[1, 2, 3, 4, 5].map((star) => (
+                                                    <Star
+                                                        key={star}
+                                                        className={`w-5 h-5 ${star <= reviews[currentIndex].rating
+                                                            ? "text-amber-400 fill-amber-400"
+                                                            : "text-[#334155]/20"
+                                                            }`}
+                                                    />
+                                                ))}
                                             </div>
-                                            <div className="text-left">
-                                                <h4 className="text-[#006666] font-semibold">{reviews[currentIndex].name}</h4>
-                                                {reviews[currentIndex].company && (
-                                                    <p className="text-[#334155] text-sm">{reviews[currentIndex].company}</p>
-                                                )}
+
+                                            {/* Author */}
+                                            <div className="flex items-center justify-center gap-3">
+                                                <div className="w-12 h-12 rounded-full bg-[#006666]/10 flex items-center justify-center text-[#006666] font-bold text-lg">
+                                                    {reviews[currentIndex].name.charAt(0).toUpperCase()}
+                                                </div>
+                                                <div className="text-left">
+                                                    <h4 className="text-[#006666] font-semibold">{reviews[currentIndex].name}</h4>
+                                                    {reviews[currentIndex].company && (
+                                                        <p className="text-[#334155] text-sm">{reviews[currentIndex].company}</p>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
                                     </motion.div>
@@ -131,13 +135,13 @@ export function Testimonials({ reviews }: TestimonialsProps) {
                                 <>
                                     <button
                                         onClick={prevSlide}
-                                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-14 w-10 h-10 rounded-full bg-white hover:bg-[#006666]/10 border border-[#006666]/20 flex items-center justify-center text-[#006666] transition-colors shadow-md"
+                                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-14 w-10 h-10 rounded-full bg-white hover:bg-[#006666]/10 border border-[#006666]/20 flex items-center justify-center text-[#006666] transition-colors shadow-md z-20"
                                     >
                                         <ChevronLeft className="w-5 h-5" />
                                     </button>
                                     <button
                                         onClick={nextSlide}
-                                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-14 w-10 h-10 rounded-full bg-white hover:bg-[#006666]/10 border border-[#006666]/20 flex items-center justify-center text-[#006666] transition-colors shadow-md"
+                                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-14 w-10 h-10 rounded-full bg-white hover:bg-[#006666]/10 border border-[#006666]/20 flex items-center justify-center text-[#006666] transition-colors shadow-md z-20"
                                     >
                                         <ChevronRight className="w-5 h-5" />
                                     </button>
@@ -170,7 +174,7 @@ export function Testimonials({ reviews }: TestimonialsProps) {
                         >
                             <Link
                                 href="/review"
-                                className="inline-flex items-center gap-2 px-6 py-3 bg-[#006666]/10 border border-[#006666]/20 rounded-xl text-[#006666] hover:bg-[#006666]/20 transition-colors"
+                                className="inline-flex items-center gap-2 px-6 py-3 bg-[#006666] rounded-xl text-white font-semibold hover:bg-[#004D4D] transition-all shadow-md hover:shadow-lg"
                             >
                                 <Star className="w-4 h-4" />
                                 Leave a Review

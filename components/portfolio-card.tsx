@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { TechCardBackground } from "./ui/tech-card-background";
 
 interface PortfolioItem {
     id: string;
@@ -21,9 +22,10 @@ export function PortfolioCard({ item, index }: { item: PortfolioItem; index: num
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: false, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative rounded-2xl overflow-hidden bg-[#4DD0C7]/20 border-2 border-[#4DD0C7]/40 shadow-md hover:shadow-xl hover:bg-[#4DD0C7]/30 cursor-pointer transition-all"
+                className="group relative rounded-3xl overflow-hidden bg-white border-2 border-[#006666]/10 shadow-lg hover:shadow-xl hover:border-[#006666]/30 cursor-pointer transition-all"
             >
-                <div className="aspect-video bg-surface relative overflow-hidden">
+                <TechCardBackground />
+                <div className="aspect-video bg-surface relative overflow-hidden z-10">
                     {item.imageUrl ? (
                         <Image
                             src={item.imageUrl}
@@ -38,7 +40,7 @@ export function PortfolioCard({ item, index }: { item: PortfolioItem; index: num
                     )}
                     <div className="absolute inset-0 bg-linear-to-t from-navy/80 to-transparent opacity-80"></div>
                 </div>
-                <div className="absolute bottom-0 left-0 p-6 w-full translate-y-2 group-hover:translate-y-0 transition-transform">
+                <div className="absolute bottom-0 left-0 p-6 w-full translate-y-2 group-hover:translate-y-0 transition-transform z-20">
                     <span className="text-xs font-bold uppercase tracking-wider mb-2 block text-teal">
                         {item.category || "Project"}
                     </span>

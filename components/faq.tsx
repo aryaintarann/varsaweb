@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { TechCardBackground } from "./ui/tech-card-background";
 
 interface FaqItem {
     id: string;
@@ -51,30 +52,33 @@ function FaqItemComponent({ faq, index }: { faq: FaqItem; index: number }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, margin: "-50px" }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
-            className="bg-[#4DD0C7]/20 border-2 border-[#4DD0C7]/40 rounded-2xl p-1 shadow-sm hover:bg-[#4DD0C7]/30 transition-colors"
+            className="bg-white border-2 border-[#006666]/10 rounded-2xl p-1 shadow-md hover:shadow-lg hover:border-[#006666]/30 transition-all duration-300 relative overflow-hidden"
         >
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center justify-between w-full p-5 text-left"
-            >
-                <span className="font-semibold text-[#006666]">{faq.question}</span>
-                <ChevronDown
-                    className={`w-5 h-5 text-[#006666] transition-transform ${isOpen ? "rotate-180" : ""}`}
-                />
-            </button>
-            <AnimatePresence initial={false}>
-                {isOpen && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden"
-                    >
-                        <p className="px-5 pb-5 text-[#334155] leading-relaxed">{faq.answer}</p>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            <TechCardBackground />
+            <div className="relative z-10">
+                <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="flex items-center justify-between w-full p-5 text-left"
+                >
+                    <span className="font-semibold text-[#006666]">{faq.question}</span>
+                    <ChevronDown
+                        className={`w-5 h-5 text-[#006666] transition-transform ${isOpen ? "rotate-180" : ""}`}
+                    />
+                </button>
+                <AnimatePresence initial={false}>
+                    {isOpen && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden"
+                        >
+                            <p className="px-5 pb-5 text-[#334155] leading-relaxed">{faq.answer}</p>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
         </motion.div>
     );
 }

@@ -172,13 +172,13 @@ export function Hero({ settings, portfolioCount, satisfactionPercentage }: HeroP
                 >
                     <Link
                         href="#contact"
-                        className="px-8 py-4 rounded-full bg-[#4DD0C7] hover:bg-[#4DD0C7]/90 text-[#006666] font-bold transition-all shadow-lg shadow-[#4DD0C7]/25 w-full sm:w-auto flex justify-center items-center gap-2 hover:-translate-y-1"
+                        className="px-8 py-4 rounded-full bg-[#006666] hover:bg-[#004D4D] text-white font-bold transition-all shadow-lg shadow-[#006666]/25 w-full sm:w-auto flex justify-center items-center gap-2 hover:-translate-y-1"
                     >
                         <Rocket className="w-5 h-5" /> {data.heroCta1}
                     </Link>
                     <Link
                         href="#portfolio"
-                        className="px-8 py-4 rounded-full bg-[#4DD0C7]/20 border-2 border-[#4DD0C7]/40 hover:bg-[#4DD0C7]/30 text-[#006666] font-medium transition-all w-full sm:w-auto hover:-translate-y-1"
+                        className="px-8 py-4 rounded-full bg-[#006666]/10 border-2 border-[#006666]/10 hover:bg-[#006666]/20 text-[#006666] font-medium transition-all w-full sm:w-auto hover:-translate-y-1"
                     >
                         {data.heroCta2}
                     </Link>
