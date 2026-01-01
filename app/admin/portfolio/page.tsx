@@ -5,8 +5,17 @@ import { Plus, Pencil, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import { DeleteButton } from "../services/delete-button";
 
+interface PortfolioItem {
+    id: string;
+    title: string;
+    description: string;
+    category: string;
+    imageUrl: string | null;
+    link: string | null;
+}
+
 export default async function PortfolioPage() {
-    const items = await getPortfolioItems();
+    const items: PortfolioItem[] = await getPortfolioItems();
 
     return (
         <div className="space-y-6">

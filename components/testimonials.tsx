@@ -1,8 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Star, Quote } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 interface Review {
     id: string;
@@ -16,31 +17,29 @@ interface TestimonialsProps {
     reviews: Review[];
 }
 
-const defaultReviews: Review[] = [
-    {
-        id: "1",
-        name: "Budi Santoso",
-        company: "PT Maju Jaya",
-        rating: 5,
-        message: "VarsaWeb sangat profesional dalam mengerjakan website kami. Hasilnya melebihi ekspektasi dan proses komunikasinya sangat baik. Highly recommended!",
-    },
-    {
-        id: "2",
-        name: "Sarah Wijaya",
-        company: "Kopi Nusantara",
-        rating: 5,
-        message: "Tim VarsaWeb sangat responsif dan kreatif. Website e-commerce kami sekarang jauh lebih modern dan penjualan meningkat signifikan.",
-    },
-    {
-        id: "3",
-        name: "Ahmad Hidayat",
-        company: "StartUp ID",
-        rating: 4,
-        message: "Pelayanan yang memuaskan dengan harga yang reasonable. Website landing page kami jadi sangat menarik dan konversi meningkat.",
-    },
-];
-
 export function Testimonials({ reviews }: TestimonialsProps) {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [autoPlay, setAutoPlay] = useState(true);
+
+    const nextSlide = () => {
+        if (reviews.length > 0) {
+            setCurrentIndex((prev) => (prev + 1) % reviews.length);
+        }
+    };
+
+    const prevSlide = () => {
+        if (reviews.length > 0) {
+            setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+        }
+    };
+
+    // Auto-play
+    useEffect(() => {
+        if (!autoPlay || reviews.length === 0) return;
+        const interval = setInterval(nextSlide, 5000);
+        return () => clearInterval(interval);
+    }, [autoPlay, reviews.length, currentIndex]);
+
     return (
         <section id="testimonials" className="py-20 bg-white/2 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,52 +72,94 @@ export function Testimonials({ reviews }: TestimonialsProps) {
                         </Link>
                     </motion.div>
                 ) : (
-                    <>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {reviews.slice(0, 6).map((review, index) => (
-                                <motion.div
-                                    key={review.id}
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: false, margin: "-50px" }}
-                                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    className="glass-card p-6 rounded-2xl border border-white/10 relative"
-                                >
-                                    <Quote className="w-10 h-10 text-indigo-500/20 absolute top-4 right-4" />
+                    <div
+                        className="max-w-3xl mx-auto"
+                        onMouseEnter={() => setAutoPlay(false)}
+                        onMouseLeave={() => setAutoPlay(true)}
+                    >
+                        {/* Slider with Arrows Container */}
+                        <div className="relative">
+                            {/* Card */}
+                            <div className="overflow-hidden rounded-3xl">
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={currentIndex}
+                                        initial={{ opacity: 0, x: 100 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -100 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="glass-card p-8 md:p-12 border border-white/10 text-center"
+                                    >
+                                        <Quote className="w-12 h-12 text-indigo-500/30 mx-auto mb-6" />
 
-                                    {/* Stars */}
-                                    <div className="flex gap-1 mb-4">
-                                        {[1, 2, 3, 4, 5].map((star) => (
-                                            <Star
-                                                key={star}
-                                                className={`w-4 h-4 ${star <= review.rating
-                                                    ? "text-amber-400 fill-amber-400"
-                                                    : "text-slate-600"
-                                                    }`}
-                                            />
-                                        ))}
-                                    </div>
+                                        {/* Message */}
+                                        <p className="text-slate-300 text-lg md:text-xl leading-relaxed mb-8">
+                                            "{reviews[currentIndex].message}"
+                                        </p>
 
-                                    {/* Message */}
-                                    <p className="text-slate-300 text-sm leading-relaxed mb-6 line-clamp-4">
-                                        "{review.message}"
-                                    </p>
-
-                                    {/* Author */}
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold">
-                                            {review.name.charAt(0).toUpperCase()}
+                                        {/* Stars */}
+                                        <div className="flex gap-1 justify-center mb-6">
+                                            {[1, 2, 3, 4, 5].map((star) => (
+                                                <Star
+                                                    key={star}
+                                                    className={`w-5 h-5 ${star <= reviews[currentIndex].rating
+                                                            ? "text-amber-400 fill-amber-400"
+                                                            : "text-slate-600"
+                                                        }`}
+                                                />
+                                            ))}
                                         </div>
-                                        <div>
-                                            <h4 className="text-white font-semibold text-sm">{review.name}</h4>
-                                            {review.company && (
-                                                <p className="text-slate-500 text-xs">{review.company}</p>
-                                            )}
+
+                                        {/* Author */}
+                                        <div className="flex items-center justify-center gap-3">
+                                            <div className="w-12 h-12 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold text-lg">
+                                                {reviews[currentIndex].name.charAt(0).toUpperCase()}
+                                            </div>
+                                            <div className="text-left">
+                                                <h4 className="text-white font-semibold">{reviews[currentIndex].name}</h4>
+                                                {reviews[currentIndex].company && (
+                                                    <p className="text-slate-500 text-sm">{reviews[currentIndex].company}</p>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
-                                </motion.div>
-                            ))}
+                                    </motion.div>
+                                </AnimatePresence>
+                            </div>
+
+                            {/* Navigation Arrows - Positioned relative to card */}
+                            {reviews.length > 1 && (
+                                <>
+                                    <button
+                                        onClick={prevSlide}
+                                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-14 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white transition-colors"
+                                    >
+                                        <ChevronLeft className="w-5 h-5" />
+                                    </button>
+                                    <button
+                                        onClick={nextSlide}
+                                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-14 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white transition-colors"
+                                    >
+                                        <ChevronRight className="w-5 h-5" />
+                                    </button>
+                                </>
+                            )}
                         </div>
+
+                        {/* Dots Indicator */}
+                        {reviews.length > 1 && (
+                            <div className="flex justify-center gap-2 mt-8">
+                                {reviews.map((_, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => setCurrentIndex(index)}
+                                        className={`w-2 h-2 rounded-full transition-all ${index === currentIndex
+                                                ? "bg-indigo-500 w-8"
+                                                : "bg-white/20 hover:bg-white/40"
+                                            }`}
+                                    />
+                                ))}
+                            </div>
+                        )}
 
                         {/* CTA */}
                         <motion.div
@@ -135,10 +176,9 @@ export function Testimonials({ reviews }: TestimonialsProps) {
                                 Berikan Review Anda
                             </Link>
                         </motion.div>
-                    </>
+                    </div>
                 )}
             </div>
         </section>
     );
 }
-
