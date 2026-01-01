@@ -22,6 +22,7 @@ export function Navbar() {
         { name: "About", href: "#about" },
         { name: "Services", href: "#services" },
         { name: "Portfolio", href: "#portfolio" },
+        { name: "Testimoni", href: "#testimonials" },
         { name: "FAQ", href: "#faq" },
         { name: "Contact", href: "#contact" },
     ];
@@ -37,7 +38,7 @@ export function Navbar() {
                 <div className="flex justify-between items-center h-20">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2 cursor-pointer group">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+                        <div className="w-10 h-10 rounded-xl bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
                             <Zap className="w-6 h-6 fill-current" />
                         </div>
                         <span className="font-bold text-xl tracking-tight text-white">

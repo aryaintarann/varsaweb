@@ -89,3 +89,13 @@ model ContactSubmission {
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
 }
+
+model Review {
+  id        String   @id @default(cuid())
+  name      String
+  company   String?
+  rating    Int      // 1-5 stars
+  message   String
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
