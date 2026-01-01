@@ -28,7 +28,7 @@ export default async function Home() {
       </div>
 
       <Navbar />
-      <Hero settings={settings} />
+      <Hero settings={settings} portfolioCount={portfolioItems.length} />
       <About settings={settings} />
       <Services services={services} />
       <Portfolio items={portfolioItems} />
