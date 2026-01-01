@@ -3,8 +3,18 @@ import { Button } from "@/components/ui/button";
 import { Check, Mail, MailOpen, Trash2 } from "lucide-react";
 import { MarkReadButton, DeleteInboxButton } from "./inbox-buttons";
 
+interface ContactSubmission {
+    id: string;
+    name: string;
+    email: string;
+    phone: string | null;
+    message: string;
+    read: boolean;
+    createdAt: Date;
+}
+
 export default async function InboxPage() {
-    const submissions = await getContactSubmissions();
+    const submissions: ContactSubmission[] = await getContactSubmissions();
 
     return (
         <div className="space-y-6">

@@ -13,12 +13,18 @@ export function PortfolioCard({ item, index }: { item: any; index: number }) {
             className="group relative rounded-2xl overflow-hidden glass-card border-0"
         >
             <div className="aspect-video bg-slate-800 relative overflow-hidden">
-                <Image
-                    src={item.imageUrl || ""}
-                    alt={item.title}
-                    fill
-                    className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
-                />
+                {item.imageUrl ? (
+                    <Image
+                        src={item.imageUrl}
+                        alt={item.title}
+                        fill
+                        className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+                    />
+                ) : (
+                    <div className="w-full h-full flex items-center justify-center text-slate-600">
+                        <span className="text-4xl">📁</span>
+                    </div>
+                )}
                 <div className="absolute inset-0 bg-linear-to-t from-dark to-transparent opacity-80"></div>
             </div>
             <div className="absolute bottom-0 left-0 p-6 w-full translate-y-2 group-hover:translate-y-0 transition-transform">
