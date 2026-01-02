@@ -1,7 +1,17 @@
+import { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { getPortfolioItems } from "@/actions/admin-actions";
 import { PortfolioCard } from "@/components/portfolio-card";
+
+export const metadata: Metadata = {
+    title: "Portfolio - Karya Terbaik Kami",
+    description: "Lihat koleksi lengkap proyek website yang telah kami kerjakan. Setiap karya mencerminkan dedikasi kami dalam menciptakan solusi digital berkualitas.",
+    openGraph: {
+        title: "Portfolio VarsaWeb - Karya Terbaik Kami",
+        description: "Lihat koleksi lengkap proyek website yang telah kami kerjakan.",
+    },
+};
 
 interface PortfolioItem {
     id: string;

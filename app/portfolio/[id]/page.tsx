@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { prisma } from "@/lib/prisma";
@@ -8,6 +9,36 @@ import { ArrowLeft, ExternalLink } from "lucide-react";
 
 interface PageProps {
     params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { id } = await params;
+
+    try {
+        const portfolio = await prisma.portfolioItem.findUnique({
+            where: { id },
+            select: { title: true, description: true, imageUrl: true },
+        });
+
+        if (!portfolio) {
+            return { title: "Not Found" };
+        }
+
+        // Strip HTML tags from description
+        const plainDescription = portfolio.description.replace(/<[^>]*>/g, '').slice(0, 160);
+
+        return {
+            title: portfolio.title,
+            description: plainDescription,
+            openGraph: {
+                title: `${portfolio.title} | VarsaWeb Portfolio`,
+                description: plainDescription,
+                images: portfolio.imageUrl ? [portfolio.imageUrl] : [],
+            },
+        };
+    } catch {
+        return { title: "Portfolio" };
+    }
 }
 
 export default async function PortfolioDetailPage({ params }: PageProps) {
