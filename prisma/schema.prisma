@@ -46,6 +46,13 @@ model SiteSettings {
   contactPhone    String  @default("+62 812 3456 7890")
   contactAddress  String  @default("Jakarta Selatan, Indonesia")
   
+  // Footer Section
+  footerDescription String @default("We are a creative team focused on high-quality website development to help business growth in Indonesia.")
+  footerInstagram   String @default("")
+  footerTiktok      String @default("")
+  footerLinkedin    String @default("")
+  footerCopyright   String @default("© 2026 VarsaWeb. All rights reserved.")
+  
   updatedAt DateTime @updatedAt
 }
 

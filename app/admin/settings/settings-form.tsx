@@ -34,12 +34,18 @@ interface SiteSettings {
     contactEmail: string;
     contactPhone: string;
     contactAddress: string;
+    footerDescription: string;
+    footerInstagram: string;
+    footerTiktok: string;
+    footerLinkedin: string;
+    footerCopyright: string;
 }
 
 const tabs = [
     { id: "hero", label: "Hero Section" },
     { id: "about", label: "About Section" },
     { id: "contact", label: "Contact Info" },
+    { id: "footer", label: "Footer" },
 ];
 
 export function SettingsForm({ settings }: { settings: SiteSettings | null }) {
@@ -74,8 +80,8 @@ export function SettingsForm({ settings }: { settings: SiteSettings | null }) {
                         type="button"
                         onClick={() => setActiveTab(tab.id)}
                         className={`px-4 py-2 text-sm font-medium transition-colors ${activeTab === tab.id
-                                ? "border-b-2 border-primary text-primary"
-                                : "text-muted-foreground hover:text-foreground"
+                            ? "border-b-2 border-primary text-primary"
+                            : "text-muted-foreground hover:text-foreground"
                             }`}
                     >
                         {tab.label}
@@ -215,6 +221,40 @@ export function SettingsForm({ settings }: { settings: SiteSettings | null }) {
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Address</label>
                         <Textarea name="contactAddress" defaultValue={settings?.contactAddress} rows={2} />
+                    </div>
+                </div>
+            )}
+
+            {/* Footer Tab */}
+            {activeTab === "footer" && (
+                <div className="space-y-6 border rounded-xl p-6 bg-background">
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Footer Description</label>
+                        <Textarea name="footerDescription" defaultValue={settings?.footerDescription} rows={3} />
+                        <p className="text-xs text-muted-foreground">Short description about your company shown in footer.</p>
+                    </div>
+
+                    <h3 className="font-semibold pt-4 border-t">Social Media Links</h3>
+                    <div className="space-y-4">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">Instagram URL</label>
+                            <Input name="footerInstagram" placeholder="https://instagram.com/yourusername" defaultValue={settings?.footerInstagram} />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">TikTok URL</label>
+                            <Input name="footerTiktok" placeholder="https://tiktok.com/@yourusername" defaultValue={settings?.footerTiktok} />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">LinkedIn URL</label>
+                            <Input name="footerLinkedin" placeholder="https://linkedin.com/company/yourcompany" defaultValue={settings?.footerLinkedin} />
+                        </div>
+                    </div>
+
+                    <h3 className="font-semibold pt-4 border-t">Copyright</h3>
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Copyright Text</label>
+                        <Input name="footerCopyright" defaultValue={settings?.footerCopyright} />
+                        <p className="text-xs text-muted-foreground">E.g., © 2026 YourBrand. All rights reserved.</p>
                     </div>
                 </div>
             )}
