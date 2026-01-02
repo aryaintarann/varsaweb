@@ -59,7 +59,7 @@ export function About({ settings }: AboutProps) {
                     >
                         <div className="absolute -top-4 -left-4 w-24 h-24 bg-teal/20 rounded-full blur-2xl"></div>
                         <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-navy/10 rounded-full blur-2xl"></div>
-                        <div className="relative aspect-video md:aspect-square overflow-hidden rounded-2xl border border-navy/10 shadow-2xl">
+                        <div className="relative aspect-video md:aspect-square overflow-hidden rounded-2xl shadow-2xl">
                             <Image
                                 src={data.aboutImage}
                                 alt="VarsaWeb Team"

@@ -40,7 +40,7 @@ export default async function Home() {
       <Portfolio items={portfolioItems} />
       <Testimonials reviews={reviews} />
       <Faq faqs={faqs} />
-      <Contact settings={settings} />
+      <Contact settings={settings} services={services} pricingPlans={pricingPlans} />
       <Footer />
     </main>
   );

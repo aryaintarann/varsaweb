@@ -25,7 +25,7 @@ export function PortfolioCard({ item, index }: { item: PortfolioItem; index: num
                 className="group relative rounded-3xl overflow-hidden bg-white border-2 border-[#006666]/10 shadow-lg hover:shadow-xl hover:border-[#006666]/30 cursor-pointer transition-all"
             >
                 <TechCardBackground />
-                <div className="aspect-video bg-surface relative overflow-hidden z-10">
+                <div className="aspect-video bg-[#F0FAFA] relative overflow-hidden z-10">
                     {item.imageUrl ? (
                         <Image
                             src={item.imageUrl}
@@ -34,14 +34,14 @@ export function PortfolioCard({ item, index }: { item: PortfolioItem; index: num
                             className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
                         />
                     ) : (
-                        <div className="w-full h-full flex items-center justify-center text-foreground/30">
+                        <div className="w-full h-full flex items-center justify-center text-[#006666]/30">
                             <span className="text-4xl">📁</span>
                         </div>
                     )}
-                    <div className="absolute inset-0 bg-linear-to-t from-navy/80 to-transparent opacity-80"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#006666]/90 to-transparent"></div>
                 </div>
                 <div className="absolute bottom-0 left-0 p-6 w-full translate-y-2 group-hover:translate-y-0 transition-transform z-20">
-                    <span className="text-xs font-bold uppercase tracking-wider mb-2 block text-teal">
+                    <span className="text-xs font-bold uppercase tracking-wider mb-2 block text-[#80FFFF]">
                         {item.category || "Project"}
                     </span>
                     <h3 className="text-xl font-bold text-white">{item.title}</h3>

@@ -112,10 +112,10 @@ export function Pricing({ plans }: PricingProps) {
                         Pricing
                     </span>
                     <h2 className="text-3xl md:text-4xl font-bold text-[#006666] mb-4">
-                        Pilih Paket yang Tepat untuk Anda
+                        Choose the Right Package for You
                     </h2>
                     <p className="text-[#334155] max-w-xl mx-auto">
-                        Harga transparan tanpa biaya tersembunyi. Semua paket termasuk support dan revisi.
+                        Transparent pricing with no hidden fees. All packages include support and revisions.
                     </p>
                 </div>
 
@@ -154,17 +154,17 @@ export function Pricing({ plans }: PricingProps) {
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
                         <div className="text-center md:text-left">
                             <h3 className="text-xl md:text-2xl font-bold text-[#006666] mb-2">
-                                Butuh solusi custom?
+                                Need a custom website?
                             </h3>
                             <p className="text-[#334155] max-w-xl">
-                                Kami siap membantu mewujudkan ide unik Anda. Konsultasikan kebutuhan spesifik bisnis Anda dengan tim ahli kami.
+                                We are ready to help make your unique ideas come true. Consult your specific business needs with our expert team.
                             </p>
                         </div>
                         <a
                             href="/#contact"
                             className="shrink-0 px-8 py-3 bg-[#006666] text-white rounded-xl font-semibold hover:bg-[#004D4D] transition-all shadow-md hover:shadow-lg"
                         >
-                            Konsultasi Gratis
+                            Free Consultation
                         </a>
                     </div>
                 </div>

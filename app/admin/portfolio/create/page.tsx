@@ -3,8 +3,8 @@
 import { createPortfolioItem } from "@/actions/admin-actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { ImageUpload } from "@/components/ui/image-upload";
+import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import { ArrowLeft, Save } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ export default function CreatePortfolioPage() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState("");
+    const [description, setDescription] = useState("");
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -21,6 +22,7 @@ export default function CreatePortfolioPage() {
 
         const formData = new FormData(e.currentTarget);
         formData.set("imageUrl", imageUrl);
+        formData.set("description", description);
         const result = await createPortfolioItem(formData);
 
         if (result.success) {
@@ -32,7 +34,7 @@ export default function CreatePortfolioPage() {
     }
 
     return (
-        <div className="space-y-6 max-w-2xl">
+        <div className="space-y-6 max-w-4xl">
             <div className="flex items-center gap-4">
                 <Button variant="outline" size="icon" asChild>
                     <Link href="/admin/portfolio">
@@ -55,7 +57,11 @@ export default function CreatePortfolioPage() {
 
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Description</label>
-                    <Textarea name="description" placeholder="Describe this project..." rows={4} required />
+                    <RichTextEditor
+                        value={description}
+                        onChange={setDescription}
+                        placeholder="Describe this project in detail..."
+                    />
                 </div>
 
                 <div className="space-y-2">

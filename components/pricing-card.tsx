@@ -123,7 +123,7 @@ export function PricingCard({ plan, index }: PricingCardProps) {
                             : "bg-[#006666]/10 text-[#006666] hover:bg-[#006666]/20"
                             }`}
                     >
-                        Pilih Paket
+                        Select Package
                     </Link>
                 </div>
             </motion.div>
