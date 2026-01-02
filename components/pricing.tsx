@@ -1,5 +1,8 @@
+"use client";
+
+import { useRef } from "react";
 import { PricingCard } from "./pricing-card";
-import { getPricingPlans } from "@/actions/pricing-actions";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface PricingPlan {
     id: string;
@@ -85,14 +88,24 @@ interface PricingProps {
     plans?: PricingPlan[];
 }
 
-export async function Pricing({ plans }: PricingProps) {
-    // Fetch from database or use provided plans
-    const dbPlans = plans || await getPricingPlans();
-    const data = dbPlans.length > 0 ? dbPlans : staticPlans;
+export function Pricing({ plans }: PricingProps) {
+    const sliderRef = useRef<HTMLDivElement>(null);
+    const data = plans && plans.length > 0 ? plans : staticPlans;
+    const sortedData = [...data].sort((a, b) => a.order - b.order);
+
+    const scroll = (direction: "left" | "right") => {
+        if (sliderRef.current) {
+            const scrollAmount = 350;
+            sliderRef.current.scrollBy({
+                left: direction === "left" ? -scrollAmount : scrollAmount,
+                behavior: "smooth",
+            });
+        }
+    };
 
     return (
-        <section id="pricing" className="py-20 bg-[#F0FAFA] overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="pricing" className="py-20 bg-[#F0FAFA]">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-visible">
                 {/* Header */}
                 <div className="text-center mb-16">
                     <span className="text-[#006666] font-bold tracking-wider uppercase text-sm mb-2 block">
@@ -106,14 +119,36 @@ export async function Pricing({ plans }: PricingProps) {
                     </p>
                 </div>
 
-                {/* Pricing Cards */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
-                    {data.map((plan: PricingPlan, index: number) => (
-                        <PricingCard key={plan.id} plan={plan} index={index} />
-                    ))}
+                {/* Pricing Cards Slider */}
+                <div className="relative">
+                    {/* Navigation Arrows */}
+                    <button
+                        onClick={() => scroll("left")}
+                        className="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-[#006666] hover:bg-[#006666] hover:text-white transition-all"
+                    >
+                        <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                        onClick={() => scroll("right")}
+                        className="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-[#006666] hover:bg-[#006666] hover:text-white transition-all"
+                    >
+                        <ChevronRight className="w-5 h-5" />
+                    </button>
+
+                    {/* Slider Container */}
+                    <div
+                        ref={sliderRef}
+                        className="flex gap-6 overflow-x-auto scrollbar-hide py-8 snap-x snap-mandatory mx-4"
+                        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                    >
+                        {sortedData.map((plan: PricingPlan, index: number) => (
+                            <div key={plan.id} className="min-w-[320px] max-w-[380px] snap-center shrink-0">
+                                <PricingCard plan={plan} index={index} />
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
-                {/* Custom Project CTA */}
                 {/* Custom Project CTA */}
                 <div className="mt-16 bg-[#006666]/5 rounded-2xl p-8 md:p-12 border border-[#006666]/10">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">

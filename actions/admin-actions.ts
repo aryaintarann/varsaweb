@@ -3,12 +3,86 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
+// ============ SERVICE CATEGORIES ============
+
+export async function getServiceCategories() {
+    try {
+        return await prisma.serviceCategory.findMany({
+            orderBy: { order: "asc" },
+            include: { services: true },
+        });
+    } catch {
+        return [];
+    }
+}
+
+export async function getServiceCategoryById(id: string) {
+    try {
+        return await prisma.serviceCategory.findUnique({
+            where: { id },
+            include: { services: true },
+        });
+    } catch {
+        return null;
+    }
+}
+
+export async function createServiceCategory(formData: FormData) {
+    try {
+        const name = formData.get("name") as string;
+        const order = parseInt(formData.get("order") as string) || 0;
+
+        await prisma.serviceCategory.create({
+            data: { name, order },
+        });
+
+        revalidatePath("/admin/services/categories");
+        revalidatePath("/admin/services");
+        revalidatePath("/");
+        return { success: true };
+    } catch (error) {
+        return { success: false, error: "Failed to create category" };
+    }
+}
+
+export async function updateServiceCategory(id: string, formData: FormData) {
+    try {
+        const name = formData.get("name") as string;
+        const order = parseInt(formData.get("order") as string) || 0;
+
+        await prisma.serviceCategory.update({
+            where: { id },
+            data: { name, order },
+        });
+
+        revalidatePath("/admin/services/categories");
+        revalidatePath("/admin/services");
+        revalidatePath("/");
+        return { success: true };
+    } catch (error) {
+        return { success: false, error: "Failed to update category" };
+    }
+}
+
+export async function deleteServiceCategory(id: string) {
+    try {
+        await prisma.serviceCategory.delete({ where: { id } });
+        revalidatePath("/admin/services/categories");
+        revalidatePath("/admin/services");
+        revalidatePath("/");
+        return { success: true };
+    } catch (error) {
+        return { success: false, error: "Failed to delete category" };
+    }
+}
+
 // ============ SERVICES ============
 
 export async function getServices() {
     try {
         return await prisma.service.findMany({
-            orderBy: { createdAt: "desc" },
+            orderBy: { order: "asc" },
+            include: { category: true },
         });
     } catch {
         return [];
@@ -17,7 +91,10 @@ export async function getServices() {
 
 export async function getServiceById(id: string) {
     try {
-        return await prisma.service.findUnique({ where: { id } });
+        return await prisma.service.findUnique({
+            where: { id },
+            include: { category: true },
+        });
     } catch {
         return null;
     }
@@ -28,9 +105,11 @@ export async function createService(formData: FormData) {
         const title = formData.get("title") as string;
         const description = formData.get("description") as string;
         const icon = formData.get("icon") as string;
+        const categoryId = formData.get("categoryId") as string || null;
+        const order = parseInt(formData.get("order") as string) || 0;
 
         await prisma.service.create({
-            data: { title, description, icon },
+            data: { title, description, icon, categoryId, order },
         });
 
         revalidatePath("/admin/services");
@@ -46,10 +125,12 @@ export async function updateService(id: string, formData: FormData) {
         const title = formData.get("title") as string;
         const description = formData.get("description") as string;
         const icon = formData.get("icon") as string;
+        const categoryId = formData.get("categoryId") as string || null;
+        const order = parseInt(formData.get("order") as string) || 0;
 
         await prisma.service.update({
             where: { id },
-            data: { title, description, icon },
+            data: { title, description, icon, categoryId, order },
         });
 
         revalidatePath("/admin/services");

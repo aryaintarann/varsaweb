@@ -11,11 +11,18 @@ export default async function ServicesPage() {
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold tracking-tight">Services</h1>
-                <Button asChild>
-                    <Link href="/admin/services/create">
-                        <Plus className="w-4 h-4 mr-2" /> Add Service
-                    </Link>
-                </Button>
+                <div className="flex gap-3">
+                    <Button variant="outline" asChild>
+                        <Link href="/admin/services/categories">
+                            Kelola Kategori
+                        </Link>
+                    </Button>
+                    <Button asChild>
+                        <Link href="/admin/services/create">
+                            <Plus className="w-4 h-4 mr-2" /> Add Service
+                        </Link>
+                    </Button>
+                </div>
             </div>
 
             <div className="border rounded-xl overflow-hidden bg-background">
