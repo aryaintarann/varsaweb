@@ -1,18 +1,6 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
-
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://varsaweb.com";
 
@@ -94,7 +82,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${jakarta.variable} ${geistMono.variable} antialiased selection:bg-teal selection:text-navy`}
+        className="font-sans antialiased selection:bg-teal selection:text-navy"
       >
         {children}
         <Toaster />
