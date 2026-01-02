@@ -7,12 +7,24 @@ import { Loader2, Mail, Phone, MapPin } from "lucide-react";
 import { toast } from "sonner";
 import { TechCardBackground } from "./ui/tech-card-background";
 
+interface Service {
+    id: string;
+    title: string;
+}
+
+interface PricingPlan {
+    id: string;
+    name: string;
+}
+
 interface ContactProps {
     settings: {
         contactEmail: string;
         contactPhone: string;
         contactAddress: string;
     } | null;
+    services?: Service[];
+    pricingPlans?: PricingPlan[];
 }
 
 const defaults = {
@@ -21,7 +33,7 @@ const defaults = {
     contactAddress: "Jakarta Selatan, Indonesia",
 };
 
-export function Contact({ settings }: ContactProps) {
+export function Contact({ settings, services = [], pricingPlans = [] }: ContactProps) {
     const [loading, setLoading] = useState(false);
     const sectionRef = useRef(null);
 
@@ -182,10 +194,36 @@ export function Contact({ settings }: ContactProps) {
                                         name="service"
                                         className="w-full bg-white border border-navy/10 rounded-xl px-4 py-3 text-navy focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal transition-all"
                                     >
-                                        <option>Company Profile</option>
-                                        <option>Online Store / E-Commerce</option>
-                                        <option>Landing Page</option>
-                                        <option>Other</option>
+                                        {(services.length > 0 || pricingPlans.length > 0) ? (
+                                            <>
+                                                {pricingPlans.length > 0 && (
+                                                    <optgroup label="Pricing Packages">
+                                                        {pricingPlans.map((plan) => (
+                                                            <option key={`plan-${plan.id}`} value={plan.name}>
+                                                                {plan.name}
+                                                            </option>
+                                                        ))}
+                                                    </optgroup>
+                                                )}
+                                                {services.length > 0 && (
+                                                    <optgroup label="Services">
+                                                        {services.map((service) => (
+                                                            <option key={`service-${service.id}`} value={service.title}>
+                                                                {service.title}
+                                                            </option>
+                                                        ))}
+                                                    </optgroup>
+                                                )}
+                                                <option value="Other">Other</option>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <option>Company Profile</option>
+                                                <option>Online Store / E-Commerce</option>
+                                                <option>Landing Page</option>
+                                                <option>Other</option>
+                                            </>
+                                        )}
                                     </select>
                                 </div>
                                 <div>

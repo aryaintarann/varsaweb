@@ -1,6 +1,6 @@
 "use client";
 
-import { updateService } from "@/actions/admin-actions";
+import { createService } from "@/actions/admin-actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,21 +15,11 @@ interface Category {
     name: string;
 }
 
-interface Service {
-    id: string;
-    title: string;
-    description: string;
-    icon: string;
-    order: number;
-    categoryId: string | null;
-}
-
-interface EditServiceFormProps {
-    service: Service;
+interface CreateServiceFormProps {
     categories: Category[];
 }
 
-export function EditServiceForm({ service, categories }: EditServiceFormProps) {
+export function CreateServiceForm({ categories }: CreateServiceFormProps) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
 
@@ -38,13 +28,13 @@ export function EditServiceForm({ service, categories }: EditServiceFormProps) {
         setLoading(true);
 
         const formData = new FormData(e.currentTarget);
-        const result = await updateService(service.id, formData);
+        const result = await createService(formData);
 
         if (result.success) {
-            toast.success("Service berhasil diperbarui");
+            toast.success("Service berhasil dibuat");
             router.push("/admin/services");
         } else {
-            toast.error(result.error || "Gagal memperbarui service");
+            toast.error(result.error || "Gagal membuat service");
         }
         setLoading(false);
     }
@@ -63,12 +53,12 @@ export function EditServiceForm({ service, categories }: EditServiceFormProps) {
             <form onSubmit={handleSubmit} className="space-y-6 border rounded-xl p-6 bg-background">
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Title</label>
-                    <Input name="title" defaultValue={service.title} required />
+                    <Input name="title" placeholder="Website Development" required />
                 </div>
 
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Icon (Lucide icon name)</label>
-                    <Input name="icon" defaultValue={service.icon} required />
+                    <Input name="icon" placeholder="layout" required />
                     <p className="text-xs text-muted-foreground">
                         Use Lucide icon names like: layout, shopping-bag, code-2, globe, etc.
                     </p>
@@ -78,7 +68,6 @@ export function EditServiceForm({ service, categories }: EditServiceFormProps) {
                     <label className="text-sm font-medium">Kategori</label>
                     <select
                         name="categoryId"
-                        defaultValue={service.categoryId || ""}
                         className="w-full border border-input rounded-md px-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring"
                     >
                         <option value="">-- Tanpa Kategori --</option>
@@ -95,7 +84,7 @@ export function EditServiceForm({ service, categories }: EditServiceFormProps) {
 
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Urutan</label>
-                    <Input name="order" type="number" defaultValue={service.order} />
+                    <Input name="order" type="number" defaultValue={0} />
                     <p className="text-xs text-muted-foreground">
                         Angka lebih kecil ditampilkan lebih dulu
                     </p>
@@ -103,13 +92,13 @@ export function EditServiceForm({ service, categories }: EditServiceFormProps) {
 
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Description</label>
-                    <Textarea name="description" defaultValue={service.description} rows={4} required />
+                    <Textarea name="description" placeholder="Describe this service..." rows={4} required />
                 </div>
 
                 <div className="flex gap-4">
                     <Button type="submit" disabled={loading}>
                         <Save className="w-4 h-4 mr-2" />
-                        {loading ? "Saving..." : "Update Service"}
+                        {loading ? "Saving..." : "Save Service"}
                     </Button>
                     <Button type="button" variant="outline" asChild>
                         <Link href="/admin/services">Cancel</Link>

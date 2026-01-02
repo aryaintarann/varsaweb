@@ -3,8 +3,8 @@
 import { updatePortfolioItem } from "@/actions/admin-actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { ImageUpload } from "@/components/ui/image-upload";
+import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import { ArrowLeft, Save } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -23,6 +23,7 @@ export function EditPortfolioForm({ item }: { item: PortfolioItem }) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState(item.imageUrl || "");
+    const [description, setDescription] = useState(item.description || "");
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -30,6 +31,7 @@ export function EditPortfolioForm({ item }: { item: PortfolioItem }) {
 
         const formData = new FormData(e.currentTarget);
         formData.set("imageUrl", imageUrl);
+        formData.set("description", description);
         const result = await updatePortfolioItem(item.id, formData);
 
         if (result.success) {
@@ -64,7 +66,11 @@ export function EditPortfolioForm({ item }: { item: PortfolioItem }) {
 
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Description</label>
-                    <Textarea name="description" defaultValue={item.description} rows={4} required />
+                    <RichTextEditor
+                        value={description}
+                        onChange={setDescription}
+                        placeholder="Describe this project in detail..."
+                    />
                 </div>
 
                 <div className="space-y-2">

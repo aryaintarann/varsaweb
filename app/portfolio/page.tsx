@@ -1,7 +1,17 @@
+import { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { getPortfolioItems } from "@/actions/admin-actions";
 import { PortfolioCard } from "@/components/portfolio-card";
+
+export const metadata: Metadata = {
+    title: "Portfolio - Karya Terbaik Kami",
+    description: "Lihat koleksi lengkap proyek website yang telah kami kerjakan. Setiap karya mencerminkan dedikasi kami dalam menciptakan solusi digital berkualitas.",
+    openGraph: {
+        title: "Portfolio VarsaWeb - Karya Terbaik Kami",
+        description: "Lihat koleksi lengkap proyek website yang telah kami kerjakan.",
+    },
+};
 
 interface PortfolioItem {
     id: string;
@@ -44,27 +54,20 @@ export default async function PortfolioPage() {
     const data: PortfolioItem[] = portfolioItems.length > 0 ? portfolioItems : staticItems;
 
     return (
-        <main className="min-h-screen relative overflow-hidden">
-            {/* Ambient Background Effects */}
-            <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
-                <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/20 rounded-full mix-blend-screen filter blur-[100px] opacity-50 animate-blob"></div>
-                <div className="absolute top-0 right-1/4 w-96 h-96 bg-pink-500/20 rounded-full mix-blend-screen filter blur-[100px] opacity-50 animate-blob animation-delay-2000"></div>
-                <div className="absolute -bottom-32 left-1/3 w-96 h-96 bg-violet-500/20 rounded-full mix-blend-screen filter blur-[100px] opacity-50 animate-blob animation-delay-4000"></div>
-            </div>
-
+        <main className="min-h-screen relative overflow-hidden bg-[#F0FAFA]">
             <Navbar />
 
             <section className="pt-32 pb-20 px-4">
                 <div className="max-w-7xl mx-auto">
                     {/* Header */}
                     <div className="text-center mb-16">
-                        <span className="text-pink-400 font-bold tracking-wider uppercase text-sm mb-2 block">
+                        <span className="text-[#006666] font-bold tracking-wider uppercase text-sm mb-2 block">
                             Portfolio
                         </span>
-                        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                        <h1 className="text-4xl md:text-5xl font-bold text-[#006666] mb-4">
                             Our Best Works
                         </h1>
-                        <p className="text-slate-400 max-w-2xl mx-auto">
+                        <p className="text-[#334155] max-w-2xl mx-auto">
                             Explore our complete collection of projects.
                             Each work reflects our dedication to creating quality digital solutions.
                         </p>
@@ -79,7 +82,7 @@ export default async function PortfolioPage() {
 
                     {data.length === 0 && (
                         <div className="text-center py-20">
-                            <p className="text-slate-500 text-lg">No portfolio items yet</p>
+                            <p className="text-[#334155] text-lg">No portfolio items yet</p>
                         </div>
                     )}
                 </div>

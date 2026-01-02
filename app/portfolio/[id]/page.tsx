@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { prisma } from "@/lib/prisma";
@@ -8,6 +9,36 @@ import { ArrowLeft, ExternalLink } from "lucide-react";
 
 interface PageProps {
     params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { id } = await params;
+
+    try {
+        const portfolio = await prisma.portfolioItem.findUnique({
+            where: { id },
+            select: { title: true, description: true, imageUrl: true },
+        });
+
+        if (!portfolio) {
+            return { title: "Not Found" };
+        }
+
+        // Strip HTML tags from description
+        const plainDescription = portfolio.description.replace(/<[^>]*>/g, '').slice(0, 160);
+
+        return {
+            title: portfolio.title,
+            description: plainDescription,
+            openGraph: {
+                title: `${portfolio.title} | VarsaWeb Portfolio`,
+                description: plainDescription,
+                images: portfolio.imageUrl ? [portfolio.imageUrl] : [],
+            },
+        };
+    } catch {
+        return { title: "Portfolio" };
+    }
 }
 
 export default async function PortfolioDetailPage({ params }: PageProps) {
@@ -22,14 +53,7 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
     }
 
     return (
-        <main className="min-h-screen relative overflow-hidden">
-            {/* Ambient Background Effects */}
-            <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
-                <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/20 rounded-full mix-blend-screen filter blur-[100px] opacity-50 animate-blob"></div>
-                <div className="absolute top-0 right-1/4 w-96 h-96 bg-pink-500/20 rounded-full mix-blend-screen filter blur-[100px] opacity-50 animate-blob animation-delay-2000"></div>
-                <div className="absolute -bottom-32 left-1/3 w-96 h-96 bg-violet-500/20 rounded-full mix-blend-screen filter blur-[100px] opacity-50 animate-blob animation-delay-4000"></div>
-            </div>
-
+        <main className="min-h-screen relative overflow-hidden bg-[#F0FAFA]">
             <Navbar />
 
             <section className="pt-32 pb-20 px-4">
@@ -37,14 +61,14 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
                     {/* Back Button */}
                     <Link
                         href="/portfolio"
-                        className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-8"
+                        className="inline-flex items-center gap-2 text-[#006666] hover:text-[#004D4D] transition-colors mb-8"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         Back to Portfolio
                     </Link>
 
                     {/* Image */}
-                    <div className="aspect-video bg-slate-800 relative overflow-hidden rounded-2xl mb-8">
+                    <div className="aspect-video bg-white relative overflow-hidden rounded-2xl mb-8 shadow-lg">
                         {portfolio.imageUrl ? (
                             <Image
                                 src={portfolio.imageUrl}
@@ -53,30 +77,31 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
                                 className="object-cover"
                             />
                         ) : (
-                            <div className="w-full h-full flex items-center justify-center text-slate-600">
+                            <div className="w-full h-full flex items-center justify-center text-[#006666]/30">
                                 <span className="text-6xl">📁</span>
                             </div>
                         )}
                     </div>
 
                     {/* Content */}
-                    <div className="glass-card p-8 rounded-2xl border border-white/10">
-                        <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm mb-2 block">
+                    <div className="bg-white p-8 rounded-2xl border-2 border-[#006666]/10 shadow-lg">
+                        <span className="text-[#006666] font-bold tracking-wider uppercase text-sm mb-2 block">
                             {portfolio.category}
                         </span>
-                        <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                        <h1 className="text-3xl md:text-4xl font-bold text-[#006666] mb-4">
                             {portfolio.title}
                         </h1>
-                        <p className="text-slate-400 leading-relaxed mb-8">
-                            {portfolio.description}
-                        </p>
+                        <div
+                            className="rich-text-content text-[#334155] mb-8"
+                            dangerouslySetInnerHTML={{ __html: portfolio.description }}
+                        />
 
                         {portfolio.link && (
                             <a
                                 href={portfolio.link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 rounded-xl text-white hover:bg-indigo-500 transition-colors"
+                                className="inline-flex items-center gap-2 px-6 py-3 bg-[#006666] rounded-xl text-white hover:bg-[#004D4D] transition-colors shadow-lg"
                             >
                                 View Project
                                 <ExternalLink className="w-4 h-4" />

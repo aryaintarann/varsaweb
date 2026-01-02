@@ -46,17 +46,35 @@ model SiteSettings {
   contactPhone    String  @default("+62 812 3456 7890")
   contactAddress  String  @default("Jakarta Selatan, Indonesia")
   
+  // Footer Section
+  footerDescription String @default("We are a creative team focused on high-quality website development to help business growth in Indonesia.")
+  footerInstagram   String @default("")
+  footerTiktok      String @default("")
+  footerLinkedin    String @default("")
+  footerCopyright   String @default("© 2026 VarsaWeb. All rights reserved.")
+  
   updatedAt DateTime @updatedAt
 }
 
+model ServiceCategory {
+  id        String    @id @default(cuid())
+  name      String
+  order     Int       @default(0)
+  services  Service[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
 model Service {
-  id          String   @id @default(cuid())
+  id          String           @id @default(cuid())
   title       String
   description String
   icon        String
-  order       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  order       Int              @default(0)
+  categoryId  String?
+  category    ServiceCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 }
 
 model PortfolioItem {
