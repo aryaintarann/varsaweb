@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { sendNewContactNotification } from "@/lib/notifications";
 import { z } from "zod";
 
 const contactSchema = z.object({
@@ -38,6 +39,16 @@ export async function submitContact(formData: FormData) {
         await prisma.contactSubmission.create({
             data: validated.data,
         });
+
+        // Send notifications to admin (runs in background, doesn't block response)
+        sendNewContactNotification({
+            name: validated.data.name,
+            email: validated.data.email,
+            phone: validated.data.phone,
+            service: validated.data.service,
+            message: validated.data.message,
+        }).catch(console.error);
+
         return { success: true, message: "Message sent successfully!" };
     } catch (e) {
         console.error("Database Error:", e);

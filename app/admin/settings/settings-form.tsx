@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ImageUpload } from "@/components/ui/image-upload";
-import { Save, Loader2 } from "lucide-react";
+import { Save, Loader2, Bell, Mail, MessageSquare } from "lucide-react";
 
 interface SiteSettings {
     id: string;
@@ -39,6 +39,10 @@ interface SiteSettings {
     footerTiktok: string;
     footerLinkedin: string;
     footerCopyright: string;
+    // Notification Settings
+    discordWebhookUrl: string;
+    emailNotifications: boolean;
+    discordNotifications: boolean;
 }
 
 const tabs = [
@@ -46,6 +50,7 @@ const tabs = [
     { id: "about", label: "About Section" },
     { id: "contact", label: "Contact Info" },
     { id: "footer", label: "Footer" },
+    { id: "notifications", label: "Notifikasi" },
 ];
 
 export function SettingsForm({ settings }: { settings: SiteSettings | null }) {
@@ -255,6 +260,89 @@ export function SettingsForm({ settings }: { settings: SiteSettings | null }) {
                         <label className="text-sm font-medium">Copyright Text</label>
                         <Input name="footerCopyright" defaultValue={settings?.footerCopyright} />
                         <p className="text-xs text-muted-foreground">E.g., © 2026 YourBrand. All rights reserved.</p>
+                    </div>
+                </div>
+            )}
+
+            {/* Notifications Tab */}
+            {activeTab === "notifications" && (
+                <div className="space-y-6 border rounded-xl p-6 bg-background">
+                    <div className="flex items-center gap-3 pb-4 border-b">
+                        <Bell className="w-6 h-6 text-primary" />
+                        <div>
+                            <h2 className="font-semibold">Pengaturan Notifikasi</h2>
+                            <p className="text-sm text-muted-foreground">Terima notifikasi saat ada review atau pesan masuk</p>
+                        </div>
+                    </div>
+
+                    {/* Email Notifications */}
+                    <div className="space-y-4 p-4 rounded-lg border bg-muted/30">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <Mail className="w-5 h-5 text-blue-500" />
+                                <div>
+                                    <h3 className="font-medium">Notifikasi Email</h3>
+                                    <p className="text-xs text-muted-foreground">Kirim email saat ada review/pesan baru</p>
+                                </div>
+                            </div>
+                            <label className="relative inline-flex items-center cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    name="emailNotifications"
+                                    value="true"
+                                    defaultChecked={settings?.emailNotifications}
+                                    className="sr-only peer"
+                                />
+                                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                            </label>
+                        </div>
+                        <div className="p-3 rounded-lg bg-green-50 border border-green-200">
+                            <p className="text-sm text-green-800">
+                                ✅ Email notifikasi akan dikirim ke <strong>semua akun admin yang terdaftar</strong> secara otomatis.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Discord Notifications */}
+                    <div className="space-y-4 p-4 rounded-lg border bg-muted/30">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <MessageSquare className="w-5 h-5 text-indigo-500" />
+                                <div>
+                                    <h3 className="font-medium">Notifikasi Discord</h3>
+                                    <p className="text-xs text-muted-foreground">Kirim pesan ke Discord webhook</p>
+                                </div>
+                            </div>
+                            <label className="relative inline-flex items-center cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    name="discordNotifications"
+                                    value="true"
+                                    defaultChecked={settings?.discordNotifications}
+                                    className="sr-only peer"
+                                />
+                                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                            </label>
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">Discord Webhook URL</label>
+                            <Input
+                                name="discordWebhookUrl"
+                                type="url"
+                                placeholder="https://discord.com/api/webhooks/..."
+                                defaultValue={settings?.discordWebhookUrl}
+                            />
+                            <p className="text-xs text-muted-foreground">
+                                Buat webhook di Server Settings → Integrations → Webhooks
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="p-4 rounded-lg bg-blue-50 border border-blue-200">
+                        <p className="text-sm text-blue-800">
+                            <strong>💡 Tips:</strong> Untuk email, pastikan Anda sudah mengonfigurasi SMTP di file <code className="px-1 py-0.5 bg-blue-100 rounded">.env</code>
+                            (SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS)
+                        </p>
                     </div>
                 </div>
             )}

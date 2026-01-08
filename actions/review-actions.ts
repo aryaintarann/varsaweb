@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { sendNewReviewNotification } from "@/lib/notifications";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -38,6 +39,15 @@ export async function submitReview(formData: FormData) {
                 approved: false,
             },
         });
+
+        // Send notifications to admin (runs in background, doesn't block response)
+        sendNewReviewNotification({
+            name: validated.data.name,
+            company: validated.data.company,
+            rating: validated.data.rating,
+            message: validated.data.message,
+        }).catch(console.error);
+
         revalidatePath("/review");
         revalidatePath("/");
         return { success: true, message: "Thank you for your review!" };
