@@ -6,9 +6,6 @@
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-/* Import Plus Jakarta Sans from Google Fonts via CSS */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-
 body {
   font-family: var(--font-sans);
 }

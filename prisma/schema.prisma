@@ -7,11 +7,17 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum UserRole {
+  OWNER
+  ADMIN
+}
+
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
   password  String
   name      String?
+  role      UserRole @default(ADMIN)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -52,6 +58,12 @@ model SiteSettings {
   footerTiktok      String @default("")
   footerLinkedin    String @default("")
   footerCopyright   String @default("© 2026 VarsaWeb. All rights reserved.")
+  
+  // Notification Settings
+  notifyEmail          String  @default("")  // Email to receive notifications
+  discordWebhookUrl    String  @default("")  // Discord webhook URL
+  emailNotifications   Boolean @default(false) // Enable/disable email notifications
+  discordNotifications Boolean @default(false) // Enable/disable Discord notifications
   
   updatedAt DateTime @updatedAt
 }

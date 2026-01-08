@@ -26,12 +26,27 @@ export async function getSiteSettings() {
 
 export async function updateSiteSettings(formData: FormData) {
     try {
-        const data: Record<string, string> = {};
+        const data: Record<string, string | boolean> = {};
+
+        // Boolean field names that need special handling
+        const booleanFields = ["emailNotifications", "discordNotifications"];
 
         // Get all form fields
         for (const [key, value] of formData.entries()) {
             if (typeof value === "string") {
-                data[key] = value;
+                // Handle boolean fields - checkbox sends "true" string when checked
+                if (booleanFields.includes(key)) {
+                    data[key] = value === "true";
+                } else {
+                    data[key] = value;
+                }
+            }
+        }
+
+        // Ensure boolean fields are set to false if not present (unchecked checkbox)
+        for (const field of booleanFields) {
+            if (!(field in data)) {
+                data[field] = false;
             }
         }
 

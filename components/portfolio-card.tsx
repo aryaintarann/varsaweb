@@ -38,7 +38,7 @@ export function PortfolioCard({ item, index }: { item: PortfolioItem; index: num
                             <span className="text-4xl">📁</span>
                         </div>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#006666]/90 to-transparent"></div>
+                    <div className="absolute inset-0 bg-linear-to-t from-[#006666]/90 to-transparent"></div>
                 </div>
                 <div className="absolute bottom-0 left-0 p-6 w-full translate-y-2 group-hover:translate-y-0 transition-transform z-20">
                     <span className="text-xs font-bold uppercase tracking-wider mb-2 block text-[#80FFFF]">
