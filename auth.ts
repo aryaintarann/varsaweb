@@ -40,7 +40,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         id: user.id,
                         name: user.name || "Admin",
                         email: user.email,
-                        role: user.role,
+                        role: (user as unknown as { role: string }).role,
                     }
                 } catch {
                     return null
