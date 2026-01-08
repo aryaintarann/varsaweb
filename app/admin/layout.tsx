@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, FileText, Briefcase, Mail, LogOut, Settings, HelpCircle, Star, DollarSign } from "lucide-react";
+import { LayoutDashboard, FileText, Briefcase, Mail, LogOut, Settings, HelpCircle, Star, DollarSign, Users } from "lucide-react";
 
 export default async function AdminLayout({
     children,
@@ -15,6 +15,8 @@ export default async function AdminLayout({
     if (!session) {
         redirect("/auth/login");
     }
+
+    const isOwner = session.user?.role === "OWNER";
 
     return (
         <div className="flex h-screen bg-muted/20">
@@ -66,6 +68,14 @@ export default async function AdminLayout({
                         <Star className="w-4 h-4" />
                         Reviews
                     </Link>
+
+                    {/* Owner-only: User Management */}
+                    {isOwner && (
+                        <Link href="/admin/users" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+                            <Users className="w-4 h-4" />
+                            User Management
+                        </Link>
+                    )}
                 </nav>
                 <div className="p-4 border-t">
                     <div className="flex items-center gap-3 mb-4">

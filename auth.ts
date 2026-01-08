@@ -40,6 +40,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         id: user.id,
                         name: user.name || "Admin",
                         email: user.email,
+                        role: user.role,
                     }
                 } catch {
                     return null
@@ -54,6 +55,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         jwt({ token, user }) {
             if (user) {
                 token.id = user.id
+                token.role = (user as { role?: string }).role
             }
             return token
         },
@@ -61,7 +63,34 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             if (token.id) {
                 session.user.id = token.id as string
             }
+            if (token.role) {
+                session.user.role = token.role as string
+            }
             return session
         },
     },
 })
+
+// Extend NextAuth types
+declare module "next-auth" {
+    interface User {
+        role?: string
+    }
+    interface Session {
+        user: {
+            id: string
+            name?: string | null
+            email?: string | null
+            role?: string
+        }
+    }
+}
+
+declare module "@auth/core/jwt" {
+    interface JWT {
+        id?: string
+        role?: string
+    }
+}
+
+
